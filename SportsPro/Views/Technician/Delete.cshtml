@@ -7,6 +7,9 @@
 <h3>@Model.Name (@Model.Phone)</h3>
 
 <form asp-action="Delete" method="post">
+
+    @*binding the TechnicianID to a hidden field. form posts primary key of the
+        product to be deleted to the Delete() action.*@
     <input type="hidden" asp-for="TechnicianID" />
 
     <button type="submit" class="btn btn-danger">Delete</button>

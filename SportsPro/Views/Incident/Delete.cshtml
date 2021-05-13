@@ -1,15 +1,18 @@
 ﻿@model Incident
 @{
-    ViewBag.Title = "Delete Product";
+    ViewBag.Title = "Delete Incident";
 }
 
 <h2>Confirm Deletion</h2>
 <h3>@Model.Title</h3>
 
 <form asp-action="Delete" method="post">
+
+    @*binding the IncidentID to a hidden field. form posts primary key of the
+        product to be deleted to the Delete() action.*@
     <input type="hidden" asp-for="IncidentID" />
 
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-controller="Incident" asp-action="IncidentManager"
-       class="btn btn-outline-secondary">Cancel</a>
+       class="btn btn-outline-primary">Cancel</a>
 </form>

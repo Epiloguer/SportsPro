@@ -1,10 +1,14 @@
-﻿@model List<Incident>
+﻿@*directive to specify the model for this view is a collection of Incident objects
+    because of the IncidentManager action method of the Incident Controller.*@
+@model List<Incident>
 @{
     ViewBag.Title = "Incident Manager";
 }
 
 <h2>Incident List</h2>
 
+@*a link to request the Add() action method of the Incident Controller.
+    Allows user to add a new Incident.*@
 <a asp-controller="Incident" asp-action="Add" class="btn btn-primary">Add New Incident</a>
 <table class="table table-bordered table-striped">
     <thead>
@@ -17,14 +21,17 @@
         </tr>
     </thead>
     <tbody>
+        @*loops through the collection of Incident objects and displays each one in a row.*@
         @foreach (var incident in Model)
         {
             <tr>
                 <td>@incident.Title</td>
                 <td>@incident.Customer.FullName</td>
                 <td>@incident.Product.Name</td>
-                <td>@incident.DateOpened</td>
+                <td>@incident.DateOpened.ToShortDateString()</td>
                 <td>
+                    @*links that request the Edit() and Delete() action methods of the
+                        Incident Controller for that specifiec Incident*@
                     <a asp-controller="Incident" asp-action="Edit"
                        asp-route-id="@incident.IncidentID" class="btn btn-outline-secondary">Edit</a>
                     <a asp-controller="Incident" asp-action="Delete"

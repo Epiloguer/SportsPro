@@ -1,10 +1,14 @@
-﻿@model List<Customer>
+﻿@*directive to specify the model for this view is a collection of Customer objects
+    because of the CustomerManager action method of the Customer Controller.*@
+@model List<Customer>
 @{
     ViewBag.Title = "Customer Manager";
 }
 
 <h2>Customer List</h2>
 
+@*a link to request the Add() action method of the Customer Controller.
+    Allows user to add a new Customer.*@
 <a asp-controller="Customer" asp-action="Add" class="btn btn-primary">Add New Customer</a>
 <table class="table table-bordered table-striped">
     <thead>
@@ -16,19 +20,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var cust in Model)
-            {
-                <tr>
-                    <td>@cust.FullName</td>
-                    <td>@cust.Email</td>
-                    <td>@cust.City</td>
-                    <td>
-                        <a asp-controller="Customer" asp-action="Edit"
-                           asp-route-id="@cust.CustomerID" class="btn btn-primary">Edit</a>
-                        <a asp-controller="Customer" asp-action="Delete"
-                           asp-route-id="@cust.CustomerID" class="btn btn-primary">Delete</a>
-                    </td>
-                </tr>
-            }
+        @*loops through the collection of Customer objects and displays each one in a row.*@
+        @foreach (var cust in Model)
+        {
+            <tr>
+                <td>@cust.FullName</td>
+                <td>@cust.Email</td>
+                <td>@cust.City</td>
+                <td>
+                    @*links that request the Edit() and Delete() action methods of the
+                        Customer Controller for that specifiec Customer*@
+                    <a asp-controller="Customer" asp-action="Edit"
+                       asp-route-id="@cust.CustomerID" class="btn btn-outline-secondary">Edit</a>
+                    <a asp-controller="Customer" asp-action="Delete"
+                       asp-route-id="@cust.CustomerID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
