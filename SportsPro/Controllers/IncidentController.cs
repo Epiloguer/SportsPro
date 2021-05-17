@@ -24,7 +24,7 @@ namespace SportsPro.Controllers
         //uses the context property to get a collection of Incident objects from the database.
         //Sorts the objects alphabetically by Incident Name.
         //Finally it passes the collection to the view.
-        public IActionResult IncidentManager()
+        public IActionResult Index()
         {
             var incident = context.Incidents.Include(c => c.Customer)
                 .Include(p => p.Product)
@@ -53,13 +53,13 @@ namespace SportsPro.Controllers
                     passing the id parameter to the Find() method to retrieve a Incident from the
                     database.*/
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id = 1)
         {
             ViewBag.Customers = context.Customers.OrderBy(c => c.FirstName).ToList();
             ViewBag.Products = context.Products.OrderBy(p => p.Name).ToList();
             ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
             ViewBag.Action = "Edit";
-            var incident = context.Incidents.Find(id);
+            Incident incident = context.Incidents.Find(id);
             return View(incident);
         }
 
@@ -77,7 +77,7 @@ namespace SportsPro.Controllers
                 else
                     context.Incidents.Update(incident);
                 context.SaveChanges();
-                return RedirectToAction("IncidentManager", "Incident");
+                return RedirectToAction("Index", "Incident");
             }
             else
             {
@@ -89,7 +89,7 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Incident object for the specified Incident from the
            database. Then passes the object to the view.*/
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id = 1)
         {
             var incident = context.Incidents.Find(id);
             return View(incident);
@@ -97,13 +97,13 @@ namespace SportsPro.Controllers
 
         /*passes the Incident object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the Incident from the database.
-          Finally it redirects the user back to the IncidentManager action.*/
+          Finally it redirects the user back to the Index action.*/
         [HttpPost]
         public IActionResult Delete(Incident incident)
         {
             context.Incidents.Remove(incident);
             context.SaveChanges();
-            return RedirectToAction("IncidentManager", "Incident");
+            return RedirectToAction("Index", "Incident");
         }
     }
 }

@@ -4,6 +4,12 @@
     ViewBag.Title = title;
 }
 
+@*Enable Validation Scripts via RenderSection() in the _Layout.cshtml*@
+@section validation {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
 @*uses the string variable above to change the title according to the action.*@
 <h2>@ViewBag.Title</h2>
 
@@ -17,22 +23,19 @@
     @*displays labels and text boxes*@
     <div class="form-group">
         <label asp-for="CustomerID">Customer</label>
-        <select asp-for="CustomerID" class="form-control">
-            <option value="">Please Select,,</option>
-            @foreach (Customer customer in ViewBag.Customers)
-            {
-                <option value="@customer.CustomerID">@customer.FullName</option>
-            }
+        <select asp-for="CustomerID"
+                asp-items="@(new SelectList(ViewBag.Customers, "CustomerID", "FullName", Model.CustomerID.ToString()))"
+                class="form-control">
+            <option value="">Please Select a Customer</option>
         </select>
     </div>
 
     <div class="form-group">
         <label asp-for="ProductID">Product</label>
-        <select asp-for="ProductID" class="form-control">
-            @foreach (Product product in ViewBag.Products)
-            {
-                <option value="@product.ProductID">@product.Name</option>
-            }
+        <select asp-for="ProductID"
+                asp-items="@(new SelectList(ViewBag.Products, "ProductID", "Name", Model.ProductID.ToString()))"
+                class="form-control">
+            <option>Please Select a Product</option>
         </select>
     </div>
 
@@ -48,11 +51,10 @@
 
     <div class="form-group">
         <label asp-for="TechnicianID">Technician</label>
-        <select asp-for="TechnicianID" class="form-control">
-            @foreach (Technician technician in ViewBag.Technician)
-            {
-                <option value="@technician.TechnicianID">@technician.Name</option>
-            }
+        <select asp-for="TechnicianID"
+                asp-items="@(new SelectList(ViewBag.Technician, "TechnicianID", "Name", Model.TechnicianID?.ToString()))"
+                class="form-control">
+           <option>Please Select a Technician</option>
         </select>
     </div>
 
@@ -72,6 +74,6 @@
     @*button link formatted, submit posts form to Edit(), ViewBag.Action displays
         Add or Edit depending on which action method served the view.*@
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
-    <a asp-controller="Incident" asp-action="IncidentManager"
+    <a asp-controller="Incident" asp-action="Index"
        class="btn btn-outline-secondary">Cancel</a>
 </form>

@@ -25,8 +25,8 @@ namespace SportsPro.Controllers
         //uses the context property to get a collection of Customer objects from the database.
         //Sorts the objects alphabetically by Customer Name.
         //Finally it passes the collection to the view.
-        //CustomerManager() uses the Include() method to select the Country data related to each Customer.
-        public IActionResult CustomerManager()
+        //Index() uses the Include() method to select the Country data related to each Customer.
+        public IActionResult Index()
         {
             var customer = context.Customers.Include(c => c.Country)
                 .OrderBy(c => c.FirstName).ToList();
@@ -50,11 +50,11 @@ namespace SportsPro.Controllers
             passing the id parameter to the Find() method to retrieve a Customer from the
             database.*/
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id = 1002)
         {
             ViewBag.Countries = context.Countries.OrderBy(c => c.Name).ToList();
             ViewBag.Action = "Edit";
-            var customer = context.Customers.Find(id);
+            Customer customer = context.Customers.Find(id);
             return View(customer);
         }
 
@@ -72,7 +72,7 @@ namespace SportsPro.Controllers
                 else
                     context.Customers.Update(customer);
                 context.SaveChanges();
-                return RedirectToAction("CustomerManager", "Customer");
+                return RedirectToAction("Index", "Customer");
             }
             else
             {
@@ -84,7 +84,7 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Customer object for the specified Customer from the
            database. Then passes the object to the view.*/
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id = 1002)
         {
             var customer = context.Customers.Find(id);
             return View(customer);
@@ -92,13 +92,13 @@ namespace SportsPro.Controllers
 
         /*passes the Customer object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the Customer from the database.
-          Finally it redirects the user back to the CustomerManager action.*/
+          Finally it redirects the user back to the Index action.*/
         [HttpPost]
         public IActionResult Delete(Customer customer)
         {
             context.Customers.Remove(customer);
             context.SaveChanges();
-            return RedirectToAction("CustomerManager", "Customer");
+            return RedirectToAction("Index", "Customer");
         }
     }
 }

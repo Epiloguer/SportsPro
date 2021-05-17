@@ -23,7 +23,7 @@ namespace SportsPro.Controllers
         //uses the context property to get a collection of Technician objects from the database.
         //Sorts the objects alphabetically by Technician Name.
         //Finally it passes the collection to the view.
-        public IActionResult TechnicianManager()
+        public IActionResult Index()
         {
             var technicians = context.Technicians.OrderBy(t => t.Name).ToList();
             return View(technicians);
@@ -45,7 +45,7 @@ namespace SportsPro.Controllers
             passing the id parameter to the Find() method to retrieve a Technician from the
             database.*/
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id = 11)
         {
             ViewBag.Action = "Edit";
             var technician = context.Technicians.Find(id);
@@ -66,7 +66,7 @@ namespace SportsPro.Controllers
                 else
                     context.Technicians.Update(technician);
                 context.SaveChanges();
-                return RedirectToAction("TechnicianManager", "Technician");
+                return RedirectToAction("Index", "Technician");
             }
             else
             {
@@ -78,7 +78,7 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Technician object for the specified Technician from the
           database. Then passes the object to the view.*/
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id = 11)
         {
             var technician = context.Technicians.Find(id);
             return View(technician);
@@ -86,13 +86,13 @@ namespace SportsPro.Controllers
 
         /*passes the Technician object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the Technician from the database.
-          Finally it redirects the user back to the TechnicianManager action.*/
+          Finally it redirects the user back to the Index action.*/
         [HttpPost]
         public IActionResult Delete(Technician technician)
         {
             context.Technicians.Remove(technician);
             context.SaveChanges();
-            return RedirectToAction("TechnicianManager", "Technician");
+            return RedirectToAction("Index", "Technician");
         }
     }
 }

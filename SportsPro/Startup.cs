@@ -21,7 +21,7 @@ namespace SportsPro
         // Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(); // add MVC services
 
             services.AddDbContext<SportsProContext>(options =>
                 options.UseSqlServer(
@@ -31,6 +31,8 @@ namespace SportsPro
                 options.LowercaseUrls = true;
                 options.AppendTrailingSlash = true;
             });
+
+            //add other services here
         }
 
         // Use this method to configure the HTTP request pipeline.
@@ -49,16 +51,26 @@ namespace SportsPro
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseRouting();  // mark where routing decisions are made
+
+            //configure middleware that runs after routing decisions have been made
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints =>    // map the endpoints
             {
+                //specific route - 1 required segment
+                endpoints.MapControllerRoute(
+                    name: "Index",
+                    pattern: "{controller}/{action=Index}/{id?}");
+
+                //least specific route - 0 required segments
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // configure other middleware here
         }
     }
 }

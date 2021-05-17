@@ -23,7 +23,7 @@ namespace SportsPro.Controllers
         //uses the context property to get a collection of Product objects from the database.
         //Sorts the objects alphabetically by Product Name.
         //Finally it passes the collection to the view.
-        public IActionResult ProductManager()
+        public ViewResult Index()
         {
             var products = context.Products.OrderBy(p => p.Name).ToList();
             return View(products);
@@ -35,7 +35,7 @@ namespace SportsPro.Controllers
             Action and pass a Product object to the view.
         Add() action passes an empty Product object.*/
         [HttpGet]
-        public IActionResult Add()
+        public ViewResult Add()
         {
             ViewBag.Action = "Add";
             return View("Edit", new Product());
@@ -45,10 +45,11 @@ namespace SportsPro.Controllers
             passing the id parameter to the Find() method to retrieve a product from the
             database.*/
         [HttpGet]
-        public IActionResult Edit(int id)
+        public ViewResult Edit(int id = 1)
         {
             ViewBag.Action = "Edit";
             var product = context.Products.Find(id);
+            
             return View(product);
         }
 
@@ -62,11 +63,17 @@ namespace SportsPro.Controllers
             if (ModelState.IsValid)
             {
                 if (product.ProductID == 0)
+                {
+                    TempData["message"] = $"{product.Name} has been added.";
                     context.Products.Add(product);
+                }   
                 else
+                {
+                    TempData["message"] = $"{product.Name} has been edited.";
                     context.Products.Update(product);
+                }   
                 context.SaveChanges();
-                return RedirectToAction("ProductManager", "Product");
+                return RedirectToAction("Index", "Product");
             }
             else
             {
@@ -78,7 +85,7 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Product object for the specified product from the
            database. Then passes the object to the view.*/
         [HttpGet]
-        public IActionResult Delete(int id)
+        public ViewResult Delete(int id = 1)
         {
             var product = context.Products.Find(id);
             return View(product);
@@ -86,13 +93,14 @@ namespace SportsPro.Controllers
 
         /*passes the Product object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the product from the database.
-          Finally it redirects the user back to the ProductManager action.*/
+          Finally it redirects the user back to the Index action.*/
         [HttpPost]
-        public IActionResult Delete(Product product)
+        public RedirectToActionResult Delete(Product product)
         {
             context.Products.Remove(product);
             context.SaveChanges();
-            return RedirectToAction("ProductManager", "Product");
+            TempData["message"] = $"{product.Name} has been deleted.";
+            return RedirectToAction("Index", "Product");
         }
     }
 }

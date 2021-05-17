@@ -4,6 +4,12 @@
     ViewBag.Title = title;
 }
 
+@*Enable Validation Scripts via RenderSection() in the _Layout.cshtml*@
+@section validation {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
 @*uses the string variable above to change the title according to the action.*@
 <h2>@ViewBag.Title</h2>
 
@@ -47,11 +53,10 @@
 
     <div class="form-group">
         <label asp-for="CountryID" class="control-label">Country</label>
-        <select asp-for="CountryID" class="form-control">
-            @foreach (Country country in ViewBag.Countries)
-            {
-                <option value="@country.CountryID">@country.Name</option>
-            }
+        <select asp-for="CountryID"
+                asp-items="@(new SelectList(ViewBag.Countries, "CountryID", "Name", Model.CountryID?.ToString()))"
+                class="form-control">
+            <option>Please Select a Country</option>
         </select>
     </div>
 
@@ -71,6 +76,6 @@
     @*button link formatted, submit posts form to Edit(), ViewBag.Action displays
         Add or Edit depending on which action method served the view.*@
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
-    <a asp-controller="Product" asp-action="ProductManager"
+    <a asp-controller="Product" asp-action="Index"
        class="btn btn-outline-secondary">Cancel</a>
 </form>
