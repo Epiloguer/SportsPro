@@ -1,6 +1,6 @@
 ﻿@*directive to specify the model for this view is a collection of Incident objects
     because of the Index action method of the Incident Controller.*@
-@model List<Incident>
+@model IncidentListViewModel
 @{
     ViewBag.Title = "Incident Manager";
 }
@@ -22,7 +22,7 @@
     </thead>
     <tbody>
         @*loops through the collection of Incident objects and displays each one in a row.*@
-        @foreach (var incident in Model)
+        @foreach (var incident in Model.Incidents)
         {
             <tr>
                 <td>@incident.Title</td>

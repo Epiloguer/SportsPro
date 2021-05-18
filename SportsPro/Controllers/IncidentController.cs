@@ -26,12 +26,15 @@ namespace SportsPro.Controllers
         //Finally it passes the collection to the view.
         public IActionResult Index()
         {
-            var incident = context.Incidents.Include(c => c.Customer)
+            var data = new IncidentListViewModel();
+
+            IQueryable<Incident> query = context.Incidents;
+            query = query.Include(c => c.Customer)
                 .Include(p => p.Product)
                 .Include(t => t.Technician)
-                .OrderBy(i => i.DateOpened)
-                .ToList();
-            return View(incident);
+                .OrderBy(i => i.DateOpened);
+            data.Incidents = query.ToList();
+            return View(data);
         }
 
         /*Action Method Add() only handles GET requests. since the Add() and Edit() both use
@@ -42,11 +45,17 @@ namespace SportsPro.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            ViewBag.Customers = context.Customers.OrderBy(c => c.FirstName).ToList();
-            ViewBag.Products = context.Products.OrderBy(p => p.Name).ToList();
-            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
-            ViewBag.Action = "Add";
-            return View("Edit", new Incident());
+            var data = new IncidentViewModel
+            {
+                Customers = context.Customers.OrderBy(c => c.FirstName).ToList(),
+                Products = context.Products.OrderBy(p => p.Name).ToList(),
+                Technicians = context.Technicians.OrderBy(t => t.Name).ToList(),
+                DesiredAction = "Add",
+                Incident = new Incident()
+
+            };
+
+            return View("Edit", data);
         }
 
         /*the Edit() action passes a Incident object with data for an existing Incident by
@@ -55,12 +64,16 @@ namespace SportsPro.Controllers
         [HttpGet]
         public IActionResult Edit(int id = 1)
         {
-            ViewBag.Customers = context.Customers.OrderBy(c => c.FirstName).ToList();
-            ViewBag.Products = context.Products.OrderBy(p => p.Name).ToList();
-            ViewBag.Technician = context.Technicians.OrderBy(t => t.Name).ToList();
-            ViewBag.Action = "Edit";
-            Incident incident = context.Incidents.Find(id);
-            return View(incident);
+            var data = new IncidentViewModel
+            {
+                Customers = context.Customers.OrderBy(c => c.FirstName).ToList(),
+                Products = context.Products.OrderBy(p => p.Name).ToList(),
+                Technicians = context.Technicians.OrderBy(t => t.Name).ToList(),
+                DesiredAction = "Edit",
+                Incident = context.Incidents.Find(id)
+
+            };
+            return View(data);
         }
 
         /*starts by checking if the user entered valid data to the model. If so, the code 

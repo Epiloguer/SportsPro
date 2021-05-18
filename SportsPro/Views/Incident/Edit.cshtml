@@ -1,6 +1,6 @@
-﻿@model Incident
+﻿@model IncidentViewModel
 @{
-    string title = ViewBag.Action + " Incident";
+    string title = Model.DesiredAction + " Incident";
     ViewBag.Title = title;
 }
 
@@ -22,58 +22,58 @@
 
     @*displays labels and text boxes*@
     <div class="form-group">
-        <label asp-for="CustomerID">Customer</label>
-        <select asp-for="CustomerID"
-                asp-items="@(new SelectList(ViewBag.Customers, "CustomerID", "FullName", Model.CustomerID.ToString()))"
+        <label asp-for="@Model.Incident.CustomerID">Customer</label>
+        <select asp-for="@Model.Incident.CustomerID"
+                asp-items="@(new SelectList(Model.Customers, "CustomerID", "FullName", Model.Incident.CustomerID.ToString()))"
                 class="form-control">
             <option value="">Please Select a Customer</option>
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="ProductID">Product</label>
-        <select asp-for="ProductID"
-                asp-items="@(new SelectList(ViewBag.Products, "ProductID", "Name", Model.ProductID.ToString()))"
+        <label asp-for="@Model.Incident.ProductID">Product</label>
+        <select asp-for="@Model.Incident.ProductID"
+                asp-items="@(new SelectList(Model.Products, "ProductID", "Name", Model.Incident.ProductID.ToString()))"
                 class="form-control">
             <option>Please Select a Product</option>
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="Title">Title</label>
-        <input asp-for="Title" class="form-control" />
+        <label asp-for="@Model.Incident.Title">Title</label>
+        <input asp-for="@Model.Incident.Title" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="Description">Description</label>
-        <input asp-for="Description" class="form-control" />
+        <label asp-for="@Model.Incident.Description">Description</label>
+        <input asp-for="@Model.Incident.Description" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="TechnicianID">Technician</label>
-        <select asp-for="TechnicianID"
-                asp-items="@(new SelectList(ViewBag.Technician, "TechnicianID", "Name", Model.TechnicianID?.ToString()))"
+        <label asp-for="@Model.Incident.TechnicianID">Technician</label>
+        <select asp-for="@Model.Incident.TechnicianID"
+                asp-items="@(new SelectList(Model.Technicians, "TechnicianID", "Name", Model.Incident.TechnicianID?.ToString()))"
                 class="form-control">
            <option>Please Select a Technician</option>
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="DateOpened">Date Opened</label>
-        <input asp-for="DateOpened" class="form-control" />
+        <label asp-for="@Model.Incident.DateOpened">Date Opened</label>
+        <input asp-for="@Model.Incident.DateOpened" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="DateClosed">Date Closed</label>
-        <input asp-for="DateClosed" class="form-control" />
+        <label asp-for="@Model.Incident.DateClosed">Date Closed</label>
+        <input asp-for="@Model.Incident.DateClosed" class="form-control" />
     </div>
 
     @*uses hidden field to store the IncidentID*@
-    <input type="hidden" asp-for="IncidentID" />
+    <input type="hidden" asp-for="@Model.Incident.IncidentID" />
 
     @*button link formatted, submit posts form to Edit(), ViewBag.Action displays
         Add or Edit depending on which action method served the view.*@
-    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <button type="submit" class="btn btn-primary">@Model.DesiredAction</button>
     <a asp-controller="Incident" asp-action="Index"
        class="btn btn-outline-secondary">Cancel</a>
 </form>
