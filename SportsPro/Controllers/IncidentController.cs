@@ -26,13 +26,25 @@ namespace SportsPro.Controllers
         //Finally it passes the collection to the view.
         public IActionResult Index()
         {
-            var data = new IncidentListViewModel();
+            ViewBag.filter = Request.Query["filter"];
+            string filter= Request.Query["filter"];
+            var data = new IncidentListViewModel()
+            {
+                MyFilter = filter
+            };
 
             IQueryable<Incident> query = context.Incidents;
             query = query.Include(c => c.Customer)
                 .Include(p => p.Product)
                 .Include(t => t.Technician)
                 .OrderBy(i => i.DateOpened);
+
+            if (filter == "unassigned")
+                query = query.Where(
+                    i => i.TechnicianID == null);
+            if (filter == "open")
+                query = query.Where(
+                    i => i.DateClosed == null);
             data.Incidents = query.ToList();
             return View(data);
         }

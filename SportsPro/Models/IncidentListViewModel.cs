@@ -8,5 +8,6 @@ namespace SportsPro.Models
     public class IncidentListViewModel:IncidentViewModel
     {
         public List<Incident> Incidents { get; set; }
+        public string MyFilter { get; set; }
     }
 }
