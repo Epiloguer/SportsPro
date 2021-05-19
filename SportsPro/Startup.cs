@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SportsPro.Models;
 using System;
@@ -61,6 +61,7 @@ namespace SportsPro
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -72,7 +73,7 @@ namespace SportsPro
 
             //configure app to use session state
             //services must be called before UseEndpoints()
-            app.UseSession();
+         
 
             app.UseEndpoints(endpoints =>    // map the endpoints
             {

@@ -13,6 +13,7 @@ namespace SportsPro.Controllers
     {
         //controller starts with a private property named context of the SportsProContext type
         private SportsProContext context { get; set; }
+        public TechnicianListViewModel viewModel;
 
         //constructor accepts a SportsProContext Object and assigns it to the context property
         //Allows other methods in this class to easily access the SportsProContext Object
@@ -20,6 +21,7 @@ namespace SportsPro.Controllers
         public TechIncidentController(SportsProContext ctx)
         {
             context = ctx;
+            viewModel = new TechnicianListViewModel();
         }
 
         //uses the context property to get a collection of Incident objects from the database.
@@ -40,27 +42,39 @@ namespace SportsPro.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Technician selectedTechnician)
+        public IActionResult Index(TechnicianListViewModel selectedTechnician)
         {
             var session = new MySession(HttpContext.Session);
             var sessionTech = session.GetTechnician();
-            sessionTech.TechnicianID = selectedTechnician.TechnicianID;
-            sessionTech.Name = selectedTechnician.Name;
-            sessionTech.Email = selectedTechnician.Email;
-            sessionTech.Phone = selectedTechnician.Phone;
+            sessionTech = context.Technicians.Find(selectedTechnician.Technician.TechnicianID);
             session.SetTechnician(sessionTech);
+         
 
             return RedirectToAction("Success", "TechIncident");
         }
 
         public IActionResult Success()
         {
-            int num = HttpContext.Session.GetInt32("num")??0;
-            num += 1;
-            HttpContext.Session.SetInt32("num", num);
+
+            var data = new IncidentListViewModel();
+            var session = new MySession(HttpContext.Session);
+            var sessionTech = session.GetTechnician();
 
 
-          return View();
+            IQueryable<Incident> query = context.Incidents;
+            query = query.Include(c => c.Customer)
+                .Include(p => p.Product)
+                .Include(t => t.Technician)
+                .OrderBy(i => i.DateOpened);
+
+
+            query = query.Where(
+                i => i.TechnicianID == sessionTech.TechnicianID)
+                .Where(
+                i => i.DateClosed == null);
+            data.Incidents = query.ToList();
+            return View(data);
+       
         }
 
         /*Action Method Add() only handles GET requests. since the Add() and Edit() both use

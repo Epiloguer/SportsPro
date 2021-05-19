@@ -21,7 +21,7 @@
 
     @*displays labels and text boxes*@
     <div class="form-group">
-        <label asp-for="@Model.Technician.TechnicianID">Techician</label>
+        <label asp-for="@Model.Technician.TechnicianID">Technician</label>
         <select asp-for="@Model.Technician.TechnicianID"
                 asp-items="@(new SelectList(Model.Technicians, "TechnicianID", "Name", Model.Technician.TechnicianID.ToString()))"
                 class="form-control">
