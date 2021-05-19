@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 //Using directive for the EF Core namespace. See next comment.
 
 namespace SportsPro.Controllers
@@ -65,6 +66,18 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
+
+            string key = nameof(Customer.CountryID);
+
+            if (ModelState.GetValidationState(key)==ModelValidationState.Valid)
+            {
+                if (customer.CountryID==null)
+                {
+                    ModelState.AddModelError(
+                        key, "Please select a country.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 if (customer.CustomerID == 0)

@@ -9,5 +9,7 @@ namespace SportsPro.Models
     {
         public List<Incident> Incidents { get; set; }
         public string MyFilter { get; set; }
+       
+
     }
 }
