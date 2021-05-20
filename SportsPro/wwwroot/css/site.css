@@ -6,6 +6,19 @@ h1 {
     font-size: 20pt;
 }
 
+.input-validation-error {
+    border: 2px solid #dc3545;
+    background-color: #faebd7;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+} 
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
