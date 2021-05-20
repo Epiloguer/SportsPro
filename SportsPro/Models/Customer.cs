@@ -43,6 +43,8 @@ namespace SportsPro.Models
 		[Required]
 		[StringLength(51)]
 		[DataType(DataType.EmailAddress,ErrorMessage ="Please enter a valid email address.")]
+	    //[UniqueEmail]
+		//[Remote(name)]
 		public string Email { get; set; }
 
 		public string FullName => FirstName + " " + LastName;   // read-only property

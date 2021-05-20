@@ -53,7 +53,9 @@ namespace SportsPro.Controllers
             the Incident/Edit view.
         For the GET request both the Add() and Edit() actions set a ViewBag property named
             Action and pass a Incident object to the view.
-        Add() action passes an empty Incident object.*/
+        Add() action passes an empty Incident object.
+        Using ViewModel(IncidentViewModel) pass list of customers, products and techinicians
+        to the view page.*/
         [HttpGet]
         public IActionResult Add()
         {
@@ -72,7 +74,9 @@ namespace SportsPro.Controllers
 
         /*the Edit() action passes a Incident object with data for an existing Incident by
                     passing the id parameter to the Find() method to retrieve a Incident from the
-                    database.*/
+                    database.
+        Using ViewModel(IncidentViewModel) pass list of customers, products and techinicians
+        to the view page.*/
         [HttpGet]
         public IActionResult Edit(int id = 1)
         {

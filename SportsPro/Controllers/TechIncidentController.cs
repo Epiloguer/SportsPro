@@ -24,9 +24,8 @@ namespace SportsPro.Controllers
             viewModel = new TechnicianListViewModel();
         }
 
-        //uses the context property to get a collection of Incident objects from the database.
-        //Sorts the objects alphabetically by Incident Name.
-        //Finally it passes the collection to the view.
+        //uses the context property to get a collection of Technican objects from the database.
+        //Passes the collection to the view.
         public IActionResult Index()
         {
 
@@ -42,6 +41,9 @@ namespace SportsPro.Controllers
         }
 
         [HttpPost]
+        /*
+         * store selected technician in session state.
+         */
         public IActionResult Index(TechnicianListViewModel selectedTechnician)
         {
             var session = new MySession(HttpContext.Session);
@@ -53,6 +55,10 @@ namespace SportsPro.Controllers
             return RedirectToAction("Success", "TechIncident");
         }
 
+        /*
+         * query (IQueryable) joins Incidents table with Product and Technician tables and displays the 
+         * resulting properties(columns)
+         */
         public IActionResult Success()
         {
 
@@ -67,12 +73,23 @@ namespace SportsPro.Controllers
                 .Include(t => t.Technician)
                 .OrderBy(i => i.DateOpened);
 
-
+            /*
+             *filters table by active technician i.e. technician stored in session (selected in dropbox 
+             *on index action) and filters on incident dateclosed where dateclosed is not specified.
+             */
             query = query.Where(
                 i => i.TechnicianID == sessionTech.TechnicianID)
                 .Where(
                 i => i.DateClosed == null);
+            
             data.Incidents = query.ToList();
+            /*checking for open incidents using an if statement and displaying a message if there 
+             * are no open incidents. Returns the user to the index action method (in TechIncident controller).
+             */
+            if (data.Incidents.Count==0)
+            {
+                TempData["message"] = $"{sessionTech.Name} has no open incidents.";
+                return RedirectToAction("Index", "TechIncident"); }
             return View(data);
        
         }

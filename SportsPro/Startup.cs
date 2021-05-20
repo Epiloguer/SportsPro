@@ -61,7 +61,7 @@ namespace SportsPro
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseSession();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -73,8 +73,8 @@ namespace SportsPro
 
             //configure app to use session state
             //services must be called before UseEndpoints()
-         
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>    // map the endpoints
             {
                 //specific route - 1 required segment

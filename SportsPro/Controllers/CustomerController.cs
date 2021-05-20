@@ -78,6 +78,17 @@ namespace SportsPro.Controllers
                 }
             }
 
+            string EmailToCheck = nameof(customer.Email);
+            
+            List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
+
+            //if (allEmails.FirstOrDefault(e => e == customer.Email))
+                if(allEmails.Contains(customer.Email))
+            {
+                ModelState.AddModelError(
+                        EmailToCheck, "Please select a unique e-mail.");
+            }
+
             if (ModelState.IsValid)
             {
                 if (customer.CustomerID == 0)
@@ -90,6 +101,7 @@ namespace SportsPro.Controllers
             else
             {
                 ViewBag.Action = (customer.CustomerID == 0) ? "Add" : "Edit";
+                ViewBag.Countries = context.Countries.OrderBy(c => c.Name).ToList();
                 return View(customer);
             }
         }
