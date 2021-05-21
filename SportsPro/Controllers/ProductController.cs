@@ -10,22 +10,22 @@ namespace SportsPro.Controllers
     public class ProductController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
-        private SportsProContext context { get; set; }
+       // private SportsProContext context { get; set; }
+        private Repository<Product> data { get; set; }
 
         //constructor accepts a SportsProContext Object and assigns it to the context property
         //Allows other methods in this class to easily access the SportsProContext Object
         //Works because of the dependecy injection code in the Startup.cs
-        public ProductController(SportsProContext ctx)
-        {
-            context = ctx;
-        }
+        public ProductController(SportsProContext ctx) => data = new Repository<Product>(ctx);
+       
 
         //uses the context property to get a collection of Product objects from the database.
         //Sorts the objects alphabetically by Product Name.
         //Finally it passes the collection to the view.
         public ViewResult Index()
         {
-            var products = context.Products.OrderBy(p => p.Name).ToList();
+            var products = data.List(new QueryOptions<Product>
+            { OrderBy = p => p.ProductCode });
             return View(products);
         }
 
@@ -48,7 +48,7 @@ namespace SportsPro.Controllers
         public ViewResult Edit(int id = 1)
         {
             ViewBag.Action = "Edit";
-            var product = context.Products.Find(id);
+            var product = data.Get(id);
             
             return View(product);
         }
@@ -65,14 +65,14 @@ namespace SportsPro.Controllers
                 if (product.ProductID == 0)
                 {
                     TempData["message"] = $"{product.Name} has been added.";
-                    context.Products.Add(product);
+                    data.Insert(product);
                 }   
                 else
                 {
                     TempData["message"] = $"{product.Name} has been edited.";
-                    context.Products.Update(product);
-                }   
-                context.SaveChanges();
+                    data.Update(product);
+                }
+                data.Save();
                 return RedirectToAction("Index", "Product");
             }
             else
@@ -87,7 +87,7 @@ namespace SportsPro.Controllers
         [HttpGet]
         public ViewResult Delete(int id = 1)
         {
-            var product = context.Products.Find(id);
+            var product = data.Get(id);
             return View(product);
         }
 
@@ -97,8 +97,8 @@ namespace SportsPro.Controllers
         [HttpPost]
         public RedirectToActionResult Delete(Product product)
         {
-            context.Products.Remove(product);
-            context.SaveChanges();
+            data.Delete(product);
+            data.Save();
             TempData["message"] = $"{product.Name} has been deleted.";
             return RedirectToAction("Index", "Product");
         }
