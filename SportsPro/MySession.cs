@@ -9,13 +9,14 @@ namespace SportsPro
 {
     public class MySession
     {
-        private const string TechnicianKey = "technician";
-
         private ISession session { get; set; }
         public MySession(ISession sess)
         {
             session = sess;
         }
+
+        //Technician
+        private const string TechnicianKey = "technician";
 
         public Technician GetTechnician() =>
             session.GetObject<Technician>(TechnicianKey) ?? new Technician();
@@ -23,5 +24,13 @@ namespace SportsPro
         public void SetTechnician(Technician technician) =>
             session.SetObject(TechnicianKey, technician);
 
+        //Customer
+        private const string CustomerKey = "customer";
+
+        public Customer GetCustomer() =>
+            session.GetObject<Customer>(CustomerKey) ?? new Customer();
+
+        public void SetCustomer(Customer customer) =>
+            session.SetObject(CustomerKey, customer);
     }
 }
