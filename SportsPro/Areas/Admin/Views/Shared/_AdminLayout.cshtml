@@ -1,10 +1,10 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = "_MainLayout";
 
     var current = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
-@section scripts {
+@section validation {
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }

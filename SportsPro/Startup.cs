@@ -91,20 +91,23 @@ namespace SportsPro
             app.UseEndpoints(endpoints =>    // map the endpoints
             {
                 //specific route - 1 required segment
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=User}/{action=Index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "Index",
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 //least specific route - 0 required segments
-                endpoints.MapAreaControllerRoute(
-                    name: "admin",
-                    areaName: "Admin",
-                    pattern: "Admin/{controller=Book}/{action=Index}/{id?}");
-
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SportsProContext.CreateAdminUser(app.ApplicationServices).Wait();
 
             // configure other middleware here
         }
