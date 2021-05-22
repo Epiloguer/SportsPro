@@ -1,0 +1,21 @@
+﻿@model RegistrationViewModel
+@{
+   ViewBag.Title = "RegProduct";
+}
+
+@*Enable Validation Scripts via RenderSection() in the _Layout.cshtml*@
+@section validation {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@*uses the string variable above to change the title according to the action.*@
+<h2>Success</h2>
+@{ 
+    var session = new MySession(Context.Session);
+    var cust = session.GetCustomer();
+}
+
+<h2>@cust.FullName</h2>
+
+

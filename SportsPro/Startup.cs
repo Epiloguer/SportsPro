@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using SportsPro.Models;
 using System;
 
@@ -45,6 +46,17 @@ namespace SportsPro
                 options.AppendTrailingSlash = true;
             });
 
+            //Identity service 
+            services.AddIdentity<User, IdentityRole>
+                (options => {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireDigit = false;
+                })
+                .AddEntityFrameworkStores<SportsProContext>()
+                .AddDefaultTokenProviders();
+
             //add other services here
         }
 
@@ -68,7 +80,8 @@ namespace SportsPro
             app.UseRouting();  // mark where routing decisions are made
 
             //configure middleware that runs after routing decisions have been made
-
+            //Configure app to use authentication and authorization (p.s. Order Matters!)
+            app.UseAuthentication();
             app.UseAuthorization();
 
             //configure app to use session state
@@ -78,15 +91,23 @@ namespace SportsPro
             app.UseEndpoints(endpoints =>    // map the endpoints
             {
                 //specific route - 1 required segment
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=User}/{action=Index}/{id?}");
+                
                 endpoints.MapControllerRoute(
                     name: "Index",
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 //least specific route - 0 required segments
+                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SportsProContext.CreateAdminUser(app.ApplicationServices).Wait();
 
             // configure other middleware here
         }
