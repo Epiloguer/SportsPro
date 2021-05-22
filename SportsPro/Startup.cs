@@ -96,6 +96,11 @@ namespace SportsPro
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 //least specific route - 0 required segments
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Book}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

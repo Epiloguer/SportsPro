@@ -9,6 +9,8 @@ using SportsPro.Models;
 
 namespace SportsPro.Areas.Admin.Controllers
 {
+    [Authorize(Role = "Admin")]
+    [Area("Admin")]
     public class UserController : Controller
     {
         private UserManager<User> userManager;
