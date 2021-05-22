@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
+    <None Include="Areas\Admin\Views\User\Add.cshtml" />
+    <None Include="Areas\Admin\Views\User\Index.cshtml" />
   </ItemGroup>
 
 
