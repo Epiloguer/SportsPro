@@ -48,5 +48,7 @@ namespace SportsPro.Models
 		public string Email { get; set; }
 
 		public string FullName => FirstName + " " + LastName;   // read-only property
-	}
+
+        public ICollection<CustProd> CustProds { get; set; }
+    }
 }
