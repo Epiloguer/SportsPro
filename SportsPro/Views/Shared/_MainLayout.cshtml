@@ -32,7 +32,8 @@
                    @(controller == "Customer" && action_router == "Index" ? "active" : "")" asp-controller="Customer" asp-action="Index">Customers</a>
                 <a class="nav-item nav-link 
                    @(controller == "Incident" && action_router == "Index" ? "active" : "")" asp-controller="Incident" asp-action="Index">Incidents</a>
-                <a class="nav-item nav-link " asp-controller="Registration" asp-action="GetCustomer">Registrations</a>
+                <a class="nav-item nav-link 
+                   @(controller == "Registration" && action_router == "Index" ? "active" : "")" asp-controller="Registration" asp-action="Index">Registrations</a>
             </div>
             <div class="navbar-nav navbar-right">
                 @if (signInManager.IsSignedIn(User)) 
