@@ -54,8 +54,36 @@ namespace SportsPro.Controllers
 
         public IActionResult RegProduct()
         {
+            var data = new RegistrationViewModel();
+            var session = new MySession(HttpContext.Session);
+            var sessionCust = session.GetCustomer();
+            ViewBag.products = context.CustProds.Include(cp => cp.Product)
+                .Where(c => c.CustomerID == sessionCust.CustomerID)
+                .Join(context.Products, cp => cp.ProductID,
+                p => p.ProductID, (cp,p) => new { p.Name }).ToList();
+                
+
+
+            //IQueryable<CustProd> query = context.CustProds;
+            //query = query.Include(p => p.Product);
+
+            /*
+             *filters table by active technician i.e. technician stored in session (selected in dropbox 
+             *on index action) and filters on incident dateclosed where dateclosed is not specified.
+             */
+            //query = query.Where(
+            //    c => c.CustomerID == sessionCust.CustomerID);
+
+            //data.Products = query.ToList();
             return View();
         }
+
+        /*var invoices = invoiceList.Join(customerList,
+         * i => i.CustomerID, c => c.CustomerID,
+         * (i, c) => new { c.Name, i.InvoiceDate, i.InvoiceTotal })
+         * .Where(ci => ci.InvoiceTotal > 150) .OrderBy(ci => ci.Name)
+         * .ThenBy(ci => ci.InvoiceDate)
+         * .Select(ci => new { ci.Name, ci.InvoiceTotal });*/
         
     }
 }

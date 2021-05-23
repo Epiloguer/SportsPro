@@ -18,4 +18,27 @@
 
 <h2>@cust.FullName</h2>
 
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in ViewBag.products)
+            {
+                <tr>
+                    <td>@product</td>
+                    @*<td>
+                        <a asp-controller="Registration" asp-action="Edit"
+                           asp-route-id="@product.ProductID" class="btn btn-outline-secondary">Edit</a>
+                        <a asp-controller="Registration" asp-action="Delete"
+                           asp-route-id="@product.ProductID" class="btn btn-danger">Delete</a>
+                    </td>*@
+                </tr>
+            }
+    </tbody>
+</table>
+
 

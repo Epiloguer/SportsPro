@@ -32,13 +32,13 @@ namespace SportsPro.Models
             //one-to-many relationship between Customer and CustProd
             modelBuilder.Entity<CustProd>()
                 .HasOne(cp => cp.Customer)
-                .WithMany(c => c.CustProd)
+                .WithMany(c => c.CustProds)
                 .HasForeignKey(cp => cp.CustomerID);
 
             //one-to-many relationship between Product and CustProd
             modelBuilder.Entity<CustProd>()
                 .HasOne(cp => cp.Product)
-                .WithMany(p => p.CustProd)
+                .WithMany(p => p.CustProds)
                 .HasForeignKey(cp => cp.ProductID);
 
             modelBuilder.Entity<Product>().HasData(
