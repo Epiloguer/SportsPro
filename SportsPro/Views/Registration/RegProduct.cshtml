@@ -10,13 +10,14 @@
 }
 
 @*uses the string variable above to change the title according to the action.*@
-<h2>Success</h2>
+
 @{ 
     var session = new MySession(Context.Session);
     var cust = session.GetCustomer();
 }
 
-<h2>@cust.FullName</h2>
+<h2>Customer Name: @cust.FullName</h2>
+<h2>Registrations</h2>
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -26,19 +27,41 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in ViewBag.products)
+        @foreach (var product in Model.CustomerProducts)
             {
                 <tr>
-                    <td>@product</td>
-                    @*<td>
-                        <a asp-controller="Registration" asp-action="Edit"
-                           asp-route-id="@product.ProductID" class="btn btn-outline-secondary">Edit</a>
+                    <td>@product.Name</td>
+                    <td>
+                        @*<a asp-controller="Registration" asp-action="Edit"
+                           asp-route-id="@product.ProductID" class="btn btn-outline-secondary">Edit</a>*@
                         <a asp-controller="Registration" asp-action="Delete"
                            asp-route-id="@product.ProductID" class="btn btn-danger">Delete</a>
-                    </td>*@
+                    </td>
                 </tr>
             }
     </tbody>
 </table>
+
+<form asp-action="RegProduct" method="post">
+
+    @*data validation*@
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @*displays labels and text boxes*@
+    <div class="form-group">
+        <label asp-for="@Model.Product.ProductID">Product</label>
+        <select asp-for="@Model.Product.ProductID"
+                asp-items="@(new SelectList(Model.Products, "ProductID", "Name", Model.Product.ProductID.ToString()))"
+                class="form-control">
+            <option value="">Please Select a Product</option>
+        </select>
+    </div>
+
+    @*button link formatted, submit posts form to Edit(), ViewBag.Action displays
+        Add or Edit depending on which action method served the view.*@
+    <button type="submit" class="btn btn-primary">Register</button>
+    <a asp-controller="Registration" asp-action="Index"
+       class="btn btn-outline-secondary">Cancel</a>
+</form>
 
 

@@ -9,6 +9,7 @@ namespace SportsPro.Models
     {
         public List<Customer> Customers { get; set; }
         public List<Product> Products { get; set; }
+        public List<Product> CustomerProducts { get; set; }
         public Customer Customer { get; set; }
         public Product Product { get; set; }
 
