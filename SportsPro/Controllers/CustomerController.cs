@@ -58,7 +58,7 @@ namespace SportsPro.Controllers
             Customer customer = context.Customers.Find(id);
             return View(customer);
         }
-
+       
         /*starts by checking if the user entered valid data to the model. If so, the code 
             checks the value of the CustomerID property of the Customer object.
           If the value is zero, it creates a new Customer passed into the Add() action.
