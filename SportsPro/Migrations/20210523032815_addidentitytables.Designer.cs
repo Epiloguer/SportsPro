@@ -10,8 +10,8 @@ using SportsPro.Models;
 namespace SportsPro.Migrations
 {
     [DbContext(typeof(SportsProContext))]
-    [Migration("20210522232738_CustProd")]
-    partial class CustProd
+    [Migration("20210523032815_addidentitytables")]
+    partial class addidentitytables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
