@@ -81,5 +81,22 @@ namespace SportsPro.Models
                 }
             }
         }
+
+        public static async Task CreateTechnicianRole(IServiceProvider serviceProvider)
+        {
+            
+            RoleManager<IdentityRole> roleManager =
+            serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            
+            string roleName = "Tech";
+
+            // if role doesn't exist, create it
+            if (await roleManager.FindByNameAsync(roleName) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+        }
+
+        }
     }
-}

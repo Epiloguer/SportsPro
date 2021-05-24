@@ -127,5 +127,12 @@ namespace SportsPro.Areas.Admin.Controllers
             if (result.Succeeded) { }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> CreatetechRole()
+        {
+            var result = await roleManager.CreateAsync(new IdentityRole("Tech"));
+            if (result.Succeeded) { }
+            return RedirectToAction("Index");
+        }
     }
 }
