@@ -95,6 +95,11 @@ namespace SportsPro
                     name: "admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=User}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                    name: "tech",
+                    areaName: "Technician",
+                    pattern: "Technician/{controller=User}/{action=Index}/{id?}");
                 
                 endpoints.MapControllerRoute(
                     name: "Index",

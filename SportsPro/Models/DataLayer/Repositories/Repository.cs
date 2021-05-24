@@ -66,6 +66,10 @@ namespace SportsPro.Models
             }
             if (options.HasPaging)
                 query = query.PageBy(options.PageNumber, options.PageSize);
+            //if (options.HasSelectBy)
+            //{
+            //    query = (IQueryable<T>)query.Select(options.SelectBy);
+            //}
 
             return query;
         }

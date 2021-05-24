@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportsPro.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RegistrationController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
@@ -28,7 +31,7 @@ namespace SportsPro.Controllers
         {
             var data = new RegistrationViewModel()
             {
-                Customer = new Customer { CustomerID = 1002 }
+                Customer = new Customer { CustomerID = 0 }
             };
 
             IQueryable<Customer> query = context.Customers;
@@ -43,6 +46,8 @@ namespace SportsPro.Controllers
          */
         public IActionResult Index(RegistrationViewModel selectedCustomer)
         {
+           //if (selectedCustomer)
+            
             var session = new MySession(HttpContext.Session);
             var sessionCustomer = session.GetCustomer();
             sessionCustomer = context.Customers.Find(selectedCustomer.Customer.CustomerID);
@@ -82,6 +87,11 @@ namespace SportsPro.Controllers
 
 
             data.Products = queryProducts.ToList();
+            if (customer.CustProds.Count == 0)
+            {
+                TempData["message"] = $"{sessionCust.FullName} has no registered products.";
+                //return RedirectToAction("RegProduct", "Registration");
+            }
 
             //IQueryable<CustProd> query = context.CustProds;
             //query = query.Include(p => p.Product);

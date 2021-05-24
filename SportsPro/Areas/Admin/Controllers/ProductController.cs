@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SportsPro.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportsPro.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
