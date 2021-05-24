@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportsPro.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RegistrationController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
