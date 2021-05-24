@@ -5,6 +5,7 @@ namespace SportsPro.Models
 {
     public class Customer
     {
+		[Required(ErrorMessage ="Please select a customer.")]
 		public int CustomerID { get; set; }
 
         [Required(ErrorMessage = "Please enter a first name.")]
