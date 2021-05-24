@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 //Using directive for the EF Core namespace. See next comment.
 
 namespace SportsPro.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CustomerController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
