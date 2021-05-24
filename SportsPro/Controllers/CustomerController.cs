@@ -10,16 +10,23 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SportsPro.Controllers
 {
+    
     public class CustomerController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
         private SportsProContext context { get; set; }
+        private Repository<Customer> data { get; set; }
+
+        private Repository<Country> countryData { get; set; }
+
 
         //constructor accepts a SportsProContext Object and assigns it to the context property
         //Allows other methods in this class to easily access the SportsProContext Object
         //Works because of the dependecy injection code in the Startup.cs
         public CustomerController(SportsProContext ctx)
         {
+            data = new Repository<Customer>(ctx);
+            countryData = new Repository<Country>(ctx);
             context = ctx;
         }
 
@@ -27,11 +34,15 @@ namespace SportsPro.Controllers
         //Sorts the objects alphabetically by Customer Name.
         //Finally it passes the collection to the view.
         //Index() uses the Include() method to select the Country data related to each Customer.
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            var customer = context.Customers.Include(c => c.Country)
-                .OrderBy(c => c.FirstName).ToList();
-            return View(customer);
+            var customers = data.List(new QueryOptions<Customer>
+            {
+                Includes = "Country",
+                OrderBy = c => c.FirstName
+            });
+                
+            return View(customers);
         }
 
         /*Action Method Add() only handles GET requests. since the Add() and Edit() both use
@@ -40,9 +51,10 @@ namespace SportsPro.Controllers
             Action and pass a Customer object to the view.
         Add() action passes an empty Customer object.*/
         [HttpGet]
-        public IActionResult Add()
+        public ViewResult Add()
         {
-            ViewBag.Countries = context.Countries.OrderBy(c => c.Name).ToList();
+            ViewBag.Countries = countryData.List(new QueryOptions<Country> 
+            { OrderBy = c => c.Name });
             ViewBag.Action = "Add";
             return View("Edit", new Customer());
         }
@@ -51,11 +63,12 @@ namespace SportsPro.Controllers
             passing the id parameter to the Find() method to retrieve a Customer from the
             database.*/
         [HttpGet]
-        public IActionResult Edit(int id = 1002)
+        public ViewResult Edit(int id = 1002)
         {
-            ViewBag.Countries = context.Countries.OrderBy(c => c.Name).ToList();
+            ViewBag.Countries = countryData.List(new QueryOptions<Country>
+            { OrderBy = c => c.Name });
             ViewBag.Action = "Edit";
-            Customer customer = context.Customers.Find(id);
+            var customer = data.Get(id);
             return View(customer);
         }
 
@@ -81,9 +94,9 @@ namespace SportsPro.Controllers
             string EmailToCheck = nameof(customer.Email);
             
             List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
-
+         
             //if (allEmails.FirstOrDefault(e => e == customer.Email))
-                if(allEmails.Contains(customer.Email))
+            if (allEmails.Contains(customer.Email))
             {
                 ModelState.AddModelError(
                         EmailToCheck, "Please select a unique e-mail.");
@@ -92,16 +105,17 @@ namespace SportsPro.Controllers
             if (ModelState.IsValid)
             {
                 if (customer.CustomerID == 0)
-                    context.Customers.Add(customer);
+                    data.Insert(customer);
                 else
-                    context.Customers.Update(customer);
-                context.SaveChanges();
+                    data.Update(customer);
+                data.Save();
                 return RedirectToAction("Index", "Customer");
             }
             else
             {
                 ViewBag.Action = (customer.CustomerID == 0) ? "Add" : "Edit";
-                ViewBag.Countries = context.Countries.OrderBy(c => c.Name).ToList();
+                ViewBag.Countries = countryData.List(new QueryOptions<Country>
+                { OrderBy = c => c.Name }); 
                 return View(customer);
             }
         }
@@ -111,7 +125,7 @@ namespace SportsPro.Controllers
         [HttpGet]
         public IActionResult Delete(int id = 1002)
         {
-            var customer = context.Customers.Find(id);
+            var customer = data.Get(id);
             return View(customer);
         }
 
@@ -121,8 +135,8 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Delete(Customer customer)
         {
-            context.Customers.Remove(customer);
-            context.SaveChanges();
+            data.Delete(customer);
+            data.Save();
             return RedirectToAction("Index", "Customer");
         }
     }
