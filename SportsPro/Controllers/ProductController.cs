@@ -99,7 +99,7 @@ namespace SportsPro.Controllers
         {
             data.Delete(product);
             data.Save();
-            TempData["message"] = $"{product.Name} has been deleted.";
+            TempData["message"] = $"Product {product.Name} has been deleted.";
             return RedirectToAction("Index", "Product");
         }
     }
