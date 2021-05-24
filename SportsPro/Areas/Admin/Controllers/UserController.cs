@@ -110,6 +110,32 @@ namespace SportsPro.Areas.Admin.Controllers
             if (result.Succeeded) { }
             return RedirectToAction("Index");
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddToTechnician(string id)
+        {
+            IdentityRole technicianRole = await roleManager.FindByNameAsync("Technician");
+            if (technicianRole == null)
+            {
+                TempData["message"] = "technician role does not exist. "
+                    + "Click 'Create technician Role' button to create it.";
+            }
+            else
+            {
+                User user = await userManager.FindByIdAsync(id);
+                await userManager.AddToRoleAsync(user, technicianRole.Name);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromTechnician(string id)
+        {
+            User user = await userManager.FindByIdAsync(id);
+            var result = await userManager.RemoveFromRoleAsync(user, "Technician");
+            if (result.Succeeded) { }
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public async Task<IActionResult> DeleteRole(string id)
@@ -124,6 +150,14 @@ namespace SportsPro.Areas.Admin.Controllers
         public async Task<IActionResult> CreateAdminRole()
         {
             var result = await roleManager.CreateAsync(new IdentityRole("Admin"));
+            if (result.Succeeded) { }
+            return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> CreateTechnicianRole()
+        {
+            var result = await roleManager.CreateAsync(new IdentityRole("Technician"));
             if (result.Succeeded) { }
             return RedirectToAction("Index");
         }
