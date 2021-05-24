@@ -52,8 +52,10 @@ the TeamsListViewModel to the views page.*@
                         Incident Controller for that specifiec Incident*@
                     <a asp-controller="Incident" asp-action="Edit"
                        asp-route-id="@incident.IncidentID" class="btn btn-outline-secondary">Edit</a>
-                    <a asp-controller="Incident" asp-action="Delete"
+                    @if (User.IsInRole("Admin"))
+                    { <a asp-controller="Incident" asp-action="Delete"
                        asp-route-id="@incident.IncidentID" class="btn btn-danger">Delete</a>
+                    }
                 </td>
             </tr>
         }
