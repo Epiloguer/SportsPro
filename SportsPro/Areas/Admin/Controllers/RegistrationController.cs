@@ -31,7 +31,7 @@ namespace SportsPro.Controllers
         {
             var data = new RegistrationViewModel()
             {
-                Customer = new Customer { CustomerID = 1 }
+                Customer = new Customer { CustomerID = 0 }
             };
 
             IQueryable<Customer> query = context.Customers;
@@ -46,6 +46,8 @@ namespace SportsPro.Controllers
          */
         public IActionResult Index(RegistrationViewModel selectedCustomer)
         {
+           //if (selectedCustomer)
+            
             var session = new MySession(HttpContext.Session);
             var sessionCustomer = session.GetCustomer();
             sessionCustomer = context.Customers.Find(selectedCustomer.Customer.CustomerID);
@@ -85,6 +87,11 @@ namespace SportsPro.Controllers
 
 
             data.Products = queryProducts.ToList();
+            if (customer.CustProds.Count == 0)
+            {
+                TempData["message"] = $"{sessionCust.FullName} has no registered products.";
+                //return RedirectToAction("RegProduct", "Registration");
+            }
 
             //IQueryable<CustProd> query = context.CustProds;
             //query = query.Include(p => p.Product);

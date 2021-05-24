@@ -9,6 +9,7 @@ namespace SportsPro.Models
     {
         // public properties for sorting, filtering, and paging
         public Expression<Func<T, Object>> OrderBy { get; set; }
+        //public Expression<Func<T, Object>> SelectBy { get; set; }
         public string OrderByDirection { get; set; } = "asc";  // default
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
@@ -46,6 +47,7 @@ namespace SportsPro.Models
         // read-only properties 
         public bool HasWhere => WhereClauses != null;
         public bool HasOrderBy => OrderBy != null;
+        //public bool HasSelectBy => SelectBy != null;
         public bool HasPaging => PageNumber > 0 && PageSize > 0;
     }
 
