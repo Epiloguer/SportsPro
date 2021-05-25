@@ -6,6 +6,19 @@ h1 {
     font-size: 20pt;
 }
 
+table {
+    font-size: 0.875rem;
+    color: #212529;
+    vertical-align: top;
+    border-color: #dee2e6;
+    background-color: rgb(255 255 255 / 80%);
+}
+
+.list-group-item {
+    background-color: rgb(0 0 0 / 0%);
+    color: white;
+}
+
 .input-validation-error {
     border: 2px solid #dc3545;
     background-color: #faebd7;
@@ -32,8 +45,11 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 40px;
+    /* Margin bottom by footer height */
+    margin-bottom: 40px;
+    background: url(../images/5_Race-Track-Nürburgring-Nordschleife-.jpg);
+    background-size:cover;
+    background-color: lightseagreen;
 }
 .footer {
   position: absolute;
