@@ -24,18 +24,21 @@
         </button>
         <nav class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Home/Index", current)" asp-controller="Home" asp-action="Index">Home</a>
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Product/Index", current)" asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Technician/Index", current)" asp-area="Admin" asp-controller="Technician" asp-action="Index">Technicians</a>
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Customer/Index", current)" asp-area="Admin" asp-controller="Customer" asp-action="Index">Customers</a>
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Incident/Index", current)" asp-area="Admin" asp-controller="Incident" asp-action="Index">Incidents</a>
-                <a class="nav-item nav-link 
+                <a class="nav-item nav-link
                    @Nav.Active("Registration/Index", current)" asp-area="Admin" asp-controller="Registration" asp-action="Index">Registrations</a>
+                <a class="nav-item nav-link
+                   @Nav.Active("ManageUsers/Index", current)" asp-area="Admin" asp-controller="ManageUsers" asp-action="Index">Manage Users</a>
+
             </div>
             <div class="navbar-nav navbar-right">
                 @if (signInManager.IsSignedIn(User)) 
