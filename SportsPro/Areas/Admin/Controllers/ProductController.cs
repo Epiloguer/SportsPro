@@ -67,12 +67,12 @@ namespace SportsPro.Controllers
             {
                 if (product.ProductID == 0)
                 {
-                    TempData["message"] = $"{product.Name} has been added.";
+                    TempData["msgAdd"] = $"{product.Name} has been added.";
                     data.Insert(product);
                 }   
                 else
                 {
-                    TempData["message"] = $"{product.Name} has been edited.";
+                    TempData["msgEdit"] = $"{product.Name} has been edited.";
                     data.Update(product);
                 }
                 data.Save();
@@ -102,7 +102,7 @@ namespace SportsPro.Controllers
         {
             data.Delete(product);
             data.Save();
-            TempData["message"] = $"Product {product.Name} has been deleted.";
+            TempData["msgDelete"] = $"{product.Name} has been deleted.";
             return RedirectToAction("Index", "Product");
         }
     }

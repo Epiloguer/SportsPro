@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace SportsPro.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
     public class IncidentController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
@@ -27,6 +26,7 @@ namespace SportsPro.Controllers
         //uses the context property to get a collection of Incident objects from the database.
         //Sorts the objects alphabetically by Incident Name.
         //Finally it passes the collection to the view.
+        [Authorize(Roles = "Admin, Technician")]
         public IActionResult Index()
         {
             ViewBag.filter = Request.Query["filter"];
@@ -59,6 +59,7 @@ namespace SportsPro.Controllers
         Add() action passes an empty Incident object.
         Using ViewModel(IncidentViewModel) pass list of customers, products and techinicians
         to the view page.*/
+        [Authorize(Roles = "Admin, Technician")]
         [HttpGet]
         public IActionResult Add()
         {
@@ -80,6 +81,7 @@ namespace SportsPro.Controllers
                     database.
         Using ViewModel(IncidentViewModel) pass list of customers, products and techinicians
         to the view page.*/
+        [Authorize(Roles = "Admin, Technician")]
         [HttpGet]
         public IActionResult Edit(int id = 1)
         {
@@ -99,6 +101,7 @@ namespace SportsPro.Controllers
             checks the value of the IncidentID property of the Incident object.
           If the value is zero, it creates a new Incident passed into the Add() action.
             Otherwise, its an existing Incident, the code passes it to the Update().*/
+        [Authorize(Roles = "Admin, Technician")]
         [HttpPost]
         public IActionResult Edit(Incident incident)
         {
@@ -120,6 +123,7 @@ namespace SportsPro.Controllers
 
         /*uses id parameter to retrieve a Incident object for the specified Incident from the
            database. Then passes the object to the view.*/
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Delete(int id = 1)
         {
@@ -130,6 +134,7 @@ namespace SportsPro.Controllers
         /*passes the Incident object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the Incident from the database.
           Finally it redirects the user back to the Index action.*/
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete(Incident incident)
         {
