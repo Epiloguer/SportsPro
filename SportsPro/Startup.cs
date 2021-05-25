@@ -57,6 +57,7 @@ namespace SportsPro
                 .AddEntityFrameworkStores<SportsProContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             //add other services here
         }
 

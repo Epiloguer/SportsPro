@@ -14,12 +14,12 @@ namespace SportsPro.Controllers
     {
         //controller starts with a private property named context of the SportsProContext type
        // private SportsProContext context { get; set; }
-        private Repository<Product> data { get; set; }
+        private IRepository<Product> data { get; set; }
 
         //constructor accepts a SportsProContext Object and assigns it to the context property
         //Allows other methods in this class to easily access the SportsProContext Object
         //Works because of the dependecy injection code in the Startup.cs
-        public ProductController(SportsProContext ctx) => data = new Repository<Product>(ctx);
+        public ProductController(IRepository<Product> rep) => data = rep;
        
 
         //uses the context property to get a collection of Product objects from the database.
