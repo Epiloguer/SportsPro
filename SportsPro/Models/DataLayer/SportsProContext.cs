@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Threading.Tasks;
 using SportsPro.Models.DataLayer.SeedData;
+using SportsPro.Models.DataLayer;
 
 namespace SportsPro.Models
 {
@@ -27,21 +28,8 @@ namespace SportsPro.Models
             base.OnModelCreating(modelBuilder);
 
             // composite primary key for CustProd
-            modelBuilder.Entity<CustProd>()
-                .HasKey(cp => new { cp.CustomerID, cp.ProductID });
 
-            //one-to-many relationship between Customer and CustProd
-            modelBuilder.Entity<CustProd>()
-                .HasOne(cp => cp.Customer)
-                .WithMany(c => c.CustProds)
-                .HasForeignKey(cp => cp.CustomerID);
-
-            //one-to-many relationship between Product and CustProd
-            modelBuilder.Entity<CustProd>()
-                .HasOne(cp => cp.Product)
-                .WithMany(p => p.CustProds)
-                .HasForeignKey(cp => cp.ProductID);
-
+            modelBuilder.ApplyConfiguration(new RegistrationConfig());
             modelBuilder.ApplyConfiguration(new SeedProducts());
 
             modelBuilder.ApplyConfiguration(new SeedCustomers());

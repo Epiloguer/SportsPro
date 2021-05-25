@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SportsPro.Models
 {
@@ -44,8 +45,8 @@ namespace SportsPro.Models
 		[Required]
 		[StringLength(51)]
 		[DataType(DataType.EmailAddress,ErrorMessage ="Please enter a valid email address.")]
-	    //[UniqueEmail]
-		//[Remote(name)]
+		//[UniqueEmail]
+		[Remote("CheckEmailRemote", "Validation")]
 		public string Email { get; set; }
 
 		public string FullName => FirstName + " " + LastName;   // read-only property

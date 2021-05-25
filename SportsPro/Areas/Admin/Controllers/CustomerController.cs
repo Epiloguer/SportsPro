@@ -7,6 +7,7 @@ using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
+using SportsPro.Areas.Admin.Models;
 //Using directive for the EF Core namespace. See next comment.
 
 namespace SportsPro.Controllers
@@ -82,26 +83,29 @@ namespace SportsPro.Controllers
         public IActionResult Edit(Customer customer)
         {
 
-            string key = nameof(Customer.CountryID);
+            //string key = nameof(Customer.CountryID);
 
-            if (ModelState.GetValidationState(key)==ModelValidationState.Valid)
-            {
-                if (customer.CountryID==null)
-                {
-                    ModelState.AddModelError(
-                        key, "Please select a country.");
-                }
-            }
+            //if (ModelState.GetValidationState(key)==ModelValidationState.Valid)
+            //{
+            //    if (customer.CountryID==null)
+            //    {
+            //        ModelState.AddModelError(
+            //            key, "Please select a country.");
+            //    }
+            //}
 
             string EmailToCheck = nameof(customer.Email);
-            
-            List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
-         
+
+
+
+
+
             //if (allEmails.FirstOrDefault(e => e == customer.Email))
-            if (allEmails.Contains(customer.Email))
+            string message = CheckEmail.EmailExists(data, customer.Email);
+            if (message!="")
             {
                 ModelState.AddModelError(
-                        EmailToCheck, "Please select a unique e-mail.");
+                        EmailToCheck, message);
             }
 
             if (ModelState.IsValid)
