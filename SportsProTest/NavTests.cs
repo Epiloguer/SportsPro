@@ -11,8 +11,8 @@ namespace SportsProTest
         [Fact]
         public void ActiveMethod_ReturnsAString()
         {
-            string s1 = "Home";                 //arrange
-            string s2 = "Books";
+            string s1 = "Product";                 //arrange
+            string s2 = "Customer";
 
             var result = Nav.Active(s1, s2);    //act
 
@@ -30,5 +30,18 @@ namespace SportsProTest
 
             Assert.Equal(expected, result);     //assert
         }
+
+        [Theory]
+        [InlineData("Product", "Customer")]
+        [InlineData("Customer", "Product")]
+        public void ActiveMethod_ReturnsEmptyStringIfNoMatch(string s1, string s2)
+        {
+            // act
+            string active = Nav.Active(s1, s2);
+
+            // assert
+            Assert.Equal("", active);
+        }
+
     }
 }

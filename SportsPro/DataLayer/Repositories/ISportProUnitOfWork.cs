@@ -7,10 +7,10 @@ namespace SportsPro.Models
 {
     public interface ISportsProUnitOfWork
     {
-        Repository<Product> Products { get; }
-        Repository<Customer> Customers { get; }
-        Repository<Technician> Technicians { get; }
-        Repository<Incident> Incidents { get; }
+        IRepository<Product> Products { get; }
+        IRepository<Customer> Customers { get; }
+        IRepository<Technician> Technicians { get; }
+        IRepository<Incident> Incidents { get; }
 
         //void DeleteCurrentBookAuthors(Book book);
         //void AddNewBookAuthors(Book book, int[] authorids);
