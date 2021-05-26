@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using SportsPro.Models;
 using System;
+using SportsPro.DataLayer.Repositories;
 
 namespace SportsPro
 {
@@ -57,6 +58,8 @@ namespace SportsPro
                 .AddEntityFrameworkStores<SportsProContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<ISportsProUnitOfWork, SportsProUnitOfWork>();
             //add other services here
         }
 

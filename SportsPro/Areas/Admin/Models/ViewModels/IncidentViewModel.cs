@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,9 +10,9 @@ namespace SportsPro.Models
     {
         public Incident Incident { get; set; }
         public Customer Customer { get; set; }
-        public List<Customer> Customers { get; set; }
-        public List<Product> Products { get; set; }
-        public List<Technician> Technicians { get; set; }
+        public IEnumerable<Customer> Customers { get; set; }
+        public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Technician> Technicians { get; set; }
         public string DesiredAction { get; set; }
     }
 }

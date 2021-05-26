@@ -107,9 +107,15 @@ namespace SportsPro.Controllers
             if (ModelState.IsValid)
             {
                 if (customer.CustomerID == 0)
+                {
+                    TempData["msgAdd"] = $"{customer.FullName} has been added.";
                     data.Insert(customer);
+                }
                 else
+                {
+                    TempData["msgEdit"] = $"{customer.FullName} has been edited.";
                     data.Update(customer);
+                }
                 data.Save();
                 return RedirectToAction("Index", "Customer");
             }
@@ -125,9 +131,9 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Customer object for the specified Customer from the
            database. Then passes the object to the view.*/
         [HttpGet]
-        public IActionResult Delete(int id = 1002)
+        public ViewResult Delete(int id = 1002)
         {
-            var customer = data.Get(id);
+            Customer customer = data.Get(id);
             return View(customer);
         }
 
@@ -137,8 +143,10 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Delete(Customer customer)
         {
+            
             data.Delete(customer);
             data.Save();
+            TempData["msgDelete"] = $"Customer ID {customer.CustomerID} has been deleted.";
             return RedirectToAction("Index", "Customer");
         }
     }

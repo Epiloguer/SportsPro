@@ -18,13 +18,25 @@
 the TeamsListViewModel to the views page.*@
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link @(Model.MyFilter=="all"||Model.MyFilter==null?"active":"")" href="/Incident?filter=all">All Incidents</a>
+        <a class="nav-link @(Model.MyFilter=="all"||Model.MyFilter==null?"active":"")"
+           asp-area="admin"
+           asp-controller="incident"
+           asp-action="index"
+           asp-route-filter="all">All Incidents</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(Model.MyFilter=="unassigned"?"active":"")" href="/Incident?filter=unassigned">Unassigned Incidents</a>
+        <a class="nav-link @(Model.MyFilter=="unassigned"?"active":"")"
+           asp-area="admin"
+           asp-controller="incident"
+           asp-action="index"
+           asp-route-filter="unassigned">Unassigned Incidents</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(Model.MyFilter=="open"?"active":"")" href="/Incident?filter=open">Open Incidents</a>
+        <a class="nav-link @(Model.MyFilter=="open"?"active":"")"
+           asp-area="admin"
+           asp-controller="incident"
+           asp-action="index"
+           asp-route-filter="open">Open Incidents</a>
     </li>
 </ul>
 @*<h1>@ViewBag.Filter</h1>*@

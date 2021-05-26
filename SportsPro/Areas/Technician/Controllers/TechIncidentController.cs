@@ -90,7 +90,7 @@ namespace SportsPro.Controllers
             /*checking for open incidents using an if statement and displaying a message if there 
              * are no open incidents. Returns the user to the index action method (in TechIncident controller).
              */
-            if (data.Incidents.Count==0)
+            if (data.Incidents.Count() == 0)
             {
                 TempData["message"] = $"{sessionTech.Name} has no open incidents.";
                 return RedirectToAction("Index", "TechIncident"); }
