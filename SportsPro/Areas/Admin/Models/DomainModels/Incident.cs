@@ -14,7 +14,8 @@ namespace SportsPro.Models
 		[Required]
 		public int ProductID { get; set; }     // foreign key property
 		public Product Product { get; set; }   // navigation property
-
+		
+		[Required]
 		public int? TechnicianID { get; set; }     // foreign key property - nullable
 		public Technician Technician { get; set; }   // navigation property
 
@@ -24,6 +25,7 @@ namespace SportsPro.Models
 		[Required]
 		public string Description { get; set; }
 
+		[Required]
 		public DateTime DateOpened { get; set; } = DateTime.Now;
 
 		public DateTime? DateClosed { get; set; } = null;

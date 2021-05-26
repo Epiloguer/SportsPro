@@ -25,7 +25,7 @@
         <select asp-for="@Model.Customer.CustomerID"
                 asp-items="@(new SelectList(Model.Customers, "CustomerID", "FullName", Model.Customer.CustomerID.ToString()))"
                 class="form-control">
-            <option value=1>Please Select a Customer</option>
+            <option>Please Select a Customer</option>
         </select>
     </div>
 

@@ -17,10 +17,21 @@
        class="list-group-item">Manage Incidents</a>
     <a asp-area="Admin" asp-controller="Registration" asp-action="Index"
        class="list-group-item">Manage Registrations</a>
+    <a asp-area="Admin" asp-action="Index" asp-controller="User"
+       class="list-group-item"> Manage Users</a>
 </div>
 
 <h1>Technicians</h1>
 <div class="list-group">
     <a asp-area="Technician" asp-controller="TechIncident" asp-action="Index"
        class="list-group-item">Update Incident</a>
+</div>
+<div>
+    <markdown>
+        [Google](https://www.google.com/) This is a link to **Google**.
+    </markdown>
+</div>
+<div>
+    @await Component.InvokeAsync("Product")
+   
 </div>
