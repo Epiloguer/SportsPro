@@ -146,9 +146,14 @@ namespace SportsPro.Controllers
             if (ModelState.IsValid)
             {
                 if (incident.IncidentID == 0)
+                {
+                    
                     context.Incidents.Add(incident);
+                }
                 else
+                {
                     context.Incidents.Update(incident);
+                }
                 context.SaveChanges();
                 return RedirectToAction("Index", "Incident");
             }
