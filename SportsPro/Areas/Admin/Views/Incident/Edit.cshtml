@@ -9,6 +9,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
+@*<partial name="_ValidationScriptsPartial" />*@
 
 @*uses the string variable above to change the title according to the action.*@
 <h2>@ViewBag.Title</h2>
@@ -35,7 +36,7 @@
         <select asp-for="@Model.Incident.ProductID"
                 asp-items="@(new SelectList(Model.Products, "ProductID", "Name", Model.Incident.ProductID.ToString()))"
                 class="form-control">
-            <option>Please Select a Product</option>
+            <option value="">Please Select a Product</option>
         </select>
     </div>
 
@@ -54,7 +55,7 @@
         <select asp-for="@Model.Incident.TechnicianID"
                 asp-items="@(new SelectList(Model.Technicians, "TechnicianID", "Name", Model.Incident.TechnicianID?.ToString()))"
                 class="form-control">
-           <option>Please Select a Technician</option>
+           <option value="">Please Select a Technician</option>
         </select>
     </div>
 

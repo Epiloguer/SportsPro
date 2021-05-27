@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.AspNetCore.Authorization;
+using SportsPro.Areas.Admin.Models;
 
 namespace SportsPro.Controllers
 {
@@ -13,22 +14,23 @@ namespace SportsPro.Controllers
     public class TechnicianController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
-        private SportsProContext context { get; set; }
+        private IRepository<Technician> data { get; set; }
 
         //constructor accepts a SportsProContext Object and assigns it to the context property
         //Allows other methods in this class to easily access the SportsProContext Object
         //Works because of the dependecy injection code in the Startup.cs
-        public TechnicianController(SportsProContext ctx)
-        {
-            context = ctx;
-        }
+        public TechnicianController(IRepository<Technician> rep) => data = rep;
 
         //uses the context property to get a collection of Technician objects from the database.
         //Sorts the objects alphabetically by Technician Name.
         //Finally it passes the collection to the view.
         public IActionResult Index()
         {
-            var technicians = context.Technicians.OrderBy(t => t.Name).ToList();
+            var technicians = data.List(new QueryOptions<Technician>
+            {
+                OrderBy = t => t.TechnicianID
+            });
+
             return View(technicians);
         }
 
@@ -51,7 +53,7 @@ namespace SportsPro.Controllers
         public IActionResult Edit(int id = 11)
         {
             ViewBag.Action = "Edit";
-            var technician = context.Technicians.Find(id);
+            var technician = data.Get(id);
             return View(technician);
         }
 
@@ -62,13 +64,32 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Edit(Technician technician)
         {
+            if (technician.TechnicianID == 0)
+            {
+                string EmailToCheck = nameof(technician.Email);
+
+
+                //if (allEmails.FirstOrDefault(e => e == customer.Email))
+                string message = CheckEmailTechnician.EmailExists(data, technician.Email);
+                if (message != "")
+                {
+                    ModelState.AddModelError(
+                      EmailToCheck, message);
+                }
+            }
             if (ModelState.IsValid)
             {
                 if (technician.TechnicianID == 0)
-                    context.Technicians.Add(technician);
+                {
+                    TempData["msgAdd"] = $"{technician.Name} has been added.";
+                    data.Insert(technician);
+                }
                 else
-                    context.Technicians.Update(technician);
-                context.SaveChanges();
+                {
+                    TempData["msgEdit"] = $"{technician.Name} has been edited.";
+                    data.Update(technician);
+                }
+                data.Save();
                 return RedirectToAction("Index", "Technician");
             }
             else
@@ -83,7 +104,7 @@ namespace SportsPro.Controllers
         [HttpGet]
         public IActionResult Delete(int id = 11)
         {
-            var technician = context.Technicians.Find(id);
+            var technician = data.Get(id);
             return View(technician);
         }
 
@@ -93,8 +114,9 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Delete(Technician technician)
         {
-            context.Technicians.Remove(technician);
-            context.SaveChanges();
+            data.Delete(technician);
+            data.Save();
+            TempData["msgDelete"] = $"{technician.Name} has been deleted.";
             return RedirectToAction("Index", "Technician");
         }
     }

@@ -14,8 +14,8 @@ namespace SportsPro.Models
 
 		[Required(ErrorMessage ="Please enter a Name")]
 		public string Name { get; set; }
-
-		[Range(0, 1000000)]
+		
+		[Range(0.01, 1000000,ErrorMessage = "Please enter a value greater than or equal to 0.01")]
 		[Column(TypeName = "decimal(8,2)")]
 		public decimal YearlyPrice { get; set; }
 

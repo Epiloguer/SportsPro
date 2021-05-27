@@ -46,12 +46,19 @@ namespace SportsPro.Controllers
          */
         public IActionResult Index(RegistrationViewModel selectedCustomer)
         {
-           //if (selectedCustomer)
-            
-            var session = new MySession(HttpContext.Session);
-            var sessionCustomer = session.GetCustomer();
-            sessionCustomer = context.Customers.Find(selectedCustomer.Customer.CustomerID);
-            session.SetCustomer(sessionCustomer);
+            if (selectedCustomer.Customer.CustomerID != 0)
+            {
+
+                var session = new MySession(HttpContext.Session);
+                var sessionCustomer = session.GetCustomer();
+                sessionCustomer = context.Customers.Find(selectedCustomer.Customer.CustomerID);
+                session.SetCustomer(sessionCustomer);
+            }
+            else
+            {
+                TempData["msgDelete"] = "Please Choose a Customer!";
+                return RedirectToAction("Index");
+            }
 
 
             return RedirectToAction("RegProduct", "Registration");
@@ -70,10 +77,10 @@ namespace SportsPro.Controllers
             //    p => p.ProductID, (cp, p) => new Product()).ToList();
             ViewBag.products = context.Customers.Include("CustProds.Product").Where(cp=>cp.CustomerID==sessionCust.CustomerID
             ).Select(cp=>new Product()).ToList();
-           // var customers = context.Customers.Include("CustProds.Product").ToList();
+            // var customers = context.Customers.Include("CustProds.Product").ToList();
 
-           // var products = context.Customers.Include("CustProds.Product").Where(c => c.CustomerID == sessionCust.CustomerID).ToList();
-            var customer= context.Customers.Include("CustProds.Product").Where(c => c.CustomerID == sessionCust.CustomerID).Single();
+            // var products = context.Customers.Include("CustProds.Product").Where(c => c.CustomerID == sessionCust.CustomerID).ToList();
+            Customer customer = context.Customers.Include("CustProds.Product").Where(c => c.CustomerID == sessionCust.CustomerID).Single();
 
             // List<Product> selectedProd=new List<Product>();
             IQueryable<Product> queryProducts = context.Products;
@@ -127,8 +134,10 @@ namespace SportsPro.Controllers
                 CustomerID = sessionCust.CustomerID,
                 ProductID = selectedProduct.Product.ProductID
             };
+            TempData["msgAdd"] = $"{context.Products.Find(selectedProduct.Product.ProductID).Name} has been Registered to {sessionCust.FullName}.";
             context.CustProds.Add(myNewCustProd);
             context.SaveChanges();
+            
 
 
             return RedirectToAction("RegProduct", "Registration");
@@ -155,8 +164,10 @@ namespace SportsPro.Controllers
                 CustomerID = sessionCust.CustomerID,
                 ProductID = product.ProductID
             };
+            TempData["msgDelete"] = $"{product.Name} has been Deleted from {sessionCust.FullName}.";
             context.CustProds.Remove(custProd);
             context.SaveChanges();
+            
             return RedirectToAction("RegProduct", "Registration");
         }
 

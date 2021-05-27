@@ -34,8 +34,10 @@ namespace SportsPro.Models
 				ErrorMessage = "Postal code may not contain special characters.")]
         public string PostalCode { get; set; }
 
-		
+		[Required]
 		public string CountryID { get; set; }
+
+		
 		public Country Country { get; set; }
 
 		[RegularExpression("^[(]{0,1}[0-9]{3}[)]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}$",ErrorMessage ="Phone number must be in (999)999-9999 format")]
