@@ -120,6 +120,12 @@
                 @TempData["msgEdit"]
             </h4>
         }
+        else if (TempData.Keys.Contains("message"))
+        {
+            <h4 class="alert alert-info text-center">
+                @TempData["message"]
+            </h4>
+        }
         else { }
     </main>
 </div>

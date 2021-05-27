@@ -18,7 +18,7 @@
 
 @*form that posts to the Edit() action. uses asp-action tag helper, but not
     asp-controller.*@
-<form asp-action="Edit" method="post">
+<form asp-area="Admin" asp-controller="Incident" asp-action="Edit" method="post">
 
     @*data validation*@
     <div asp-validation-summary="All" class="text-danger"></div>
