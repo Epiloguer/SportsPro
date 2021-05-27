@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SportsPro.Controllers
 {
     [Area("Technician")]
-    [Authorize(Roles = "Technician")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Technician")]
     public class TechIncidentController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type
@@ -147,9 +146,14 @@ namespace SportsPro.Controllers
             if (ModelState.IsValid)
             {
                 if (incident.IncidentID == 0)
+                {
+                    
                     context.Incidents.Add(incident);
+                }
                 else
+                {
                     context.Incidents.Update(incident);
+                }
                 context.SaveChanges();
                 return RedirectToAction("Index", "Incident");
             }

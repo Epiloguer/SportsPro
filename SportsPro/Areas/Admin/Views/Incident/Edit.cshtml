@@ -22,23 +22,25 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     @*displays labels and text boxes*@
-    <div class="form-group">
-        <label asp-for="@Model.Incident.CustomerID">Customer</label>
-        <select asp-for="@Model.Incident.CustomerID"
-                asp-items="@(new SelectList(Model.Customers, "CustomerID", "FullName", Model.Incident.CustomerID.ToString()))"
-                class="form-control">
-            <option value="">Please Select a Customer</option>
-        </select>
-    </div>
+<div class="form-group">
+    <label asp-for="@Model.Incident.CustomerID" class="control-label">Customer</label>
+    <select asp-for="@Model.Incident.CustomerID" class="form-control">
+        <vc:customer-drop-down value="@Model.Incident.CustomerID"
+                              default-value=""
+                              default-text="Please Select a Customer..." />
+    </select>
+    <span asp-validation-for="@Model.Incident.CustomerID" class="text-danger"></span>
+</div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Incident.ProductID">Product</label>
-        <select asp-for="@Model.Incident.ProductID"
-                asp-items="@(new SelectList(Model.Products, "ProductID", "Name", Model.Incident.ProductID.ToString()))"
-                class="form-control">
-            <option value="">Please Select a Product</option>
-        </select>
-    </div>
+<div class="form-group">
+    <label asp-for="@Model.Incident.ProductID" class="control-label">Product</label>
+    <select asp-for="@Model.Incident.ProductID" class="form-control">
+        <vc:product-drop-down value="@Model.Incident.ProductID"
+                               default-value=""
+                               default-text="Please Select a Product..." />
+    </select>
+    <span asp-validation-for="@Model.Incident.ProductID" class="text-danger"></span>
+</div>
 
     <div class="form-group">
         <label asp-for="@Model.Incident.Title">Title</label>
@@ -51,12 +53,13 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Incident.TechnicianID">Technician</label>
-        <select asp-for="@Model.Incident.TechnicianID"
-                asp-items="@(new SelectList(Model.Technicians, "TechnicianID", "Name", Model.Incident.TechnicianID?.ToString()))"
-                class="form-control">
-           <option value="">Please Select a Technician</option>
+        <label asp-for="@Model.Incident.TechnicianID" class="control-label">Technician</label>
+        <select asp-for="@Model.Incident.TechnicianID" class="form-control">
+            <vc:technician-drop-down value="@Model.Incident.TechnicianID"
+                                   default-value=""
+                                   default-text="Please Select a Technician..." />
         </select>
+        <span asp-validation-for="@Model.Incident.TechnicianID" class="text-danger"></span>
     </div>
 
     <div class="form-group">
