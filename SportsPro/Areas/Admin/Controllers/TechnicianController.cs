@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SportsPro.Models;
 using Microsoft.AspNetCore.Authorization;
+using SportsPro.Areas.Admin.Models;
 
 namespace SportsPro.Controllers
 {
@@ -63,6 +64,19 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Edit(Technician technician)
         {
+            if (technician.TechnicianID == 0)
+            {
+                string EmailToCheck = nameof(technician.Email);
+
+
+                //if (allEmails.FirstOrDefault(e => e == customer.Email))
+                string message = CheckEmailTechnician.EmailExists(data, technician.Email);
+                if (message != "")
+                {
+                    ModelState.AddModelError(
+                      EmailToCheck, message);
+                }
+            }
             if (ModelState.IsValid)
             {
                 if (technician.TechnicianID == 0)

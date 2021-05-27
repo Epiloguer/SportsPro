@@ -11,6 +11,8 @@
     @*binding the CustomerID to a hidden field. form posts primary key of the
         product to be deleted to the Delete() action.*@
     <input type="hidden" asp-for="CustomerID" />
+    <input type="hidden" asp-for="FirstName" />
+    <input type="hidden" asp-for="LastName" />
 
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-controller="Customer" asp-action="Index"
