@@ -7,6 +7,7 @@ using SportsPro.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
+using SportsPro.Areas.Admin.Models;
 //Using directive for the EF Core namespace. See next comment.
 
 namespace SportsPro.Controllers
@@ -81,27 +82,16 @@ namespace SportsPro.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
-
-            string key = nameof(Customer.CountryID);
-
-            if (ModelState.GetValidationState(key)==ModelValidationState.Valid)
+            if (customer.CustomerID == 0)
             {
-                if (customer.CountryID==null)
+                string EmailToCheck = nameof(customer.Email);
+
+                string message = CheckEmail.EmailExists(data, customer.Email);
+                if (message != "")
                 {
                     ModelState.AddModelError(
-                        key, "Please select a country.");
+                      EmailToCheck, message);
                 }
-            }
-
-            string EmailToCheck = nameof(customer.Email);
-            
-            List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
-         
-            //if (allEmails.FirstOrDefault(e => e == customer.Email))
-            if (allEmails.Contains(customer.Email))
-            {
-                ModelState.AddModelError(
-                        EmailToCheck, "Please select a unique e-mail.");
             }
 
             if (ModelState.IsValid)
@@ -146,7 +136,7 @@ namespace SportsPro.Controllers
             
             data.Delete(customer);
             data.Save();
-            TempData["msgDelete"] = $"Customer ID {customer.CustomerID} has been deleted.";
+            TempData["msgDelete"] = $"{customer.FirstName} {customer.LastName} has been deleted.";
             return RedirectToAction("Index", "Customer");
         }
     }

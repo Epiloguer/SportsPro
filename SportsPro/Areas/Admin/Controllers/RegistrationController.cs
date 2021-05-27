@@ -134,8 +134,10 @@ namespace SportsPro.Controllers
                 CustomerID = sessionCust.CustomerID,
                 ProductID = selectedProduct.Product.ProductID
             };
+            TempData["msgAdd"] = $"{context.Products.Find(selectedProduct.Product.ProductID).Name} has been Registered to {sessionCust.FullName}.";
             context.CustProds.Add(myNewCustProd);
             context.SaveChanges();
+            
 
 
             return RedirectToAction("RegProduct", "Registration");
@@ -162,8 +164,10 @@ namespace SportsPro.Controllers
                 CustomerID = sessionCust.CustomerID,
                 ProductID = product.ProductID
             };
+            TempData["msgDelete"] = $"{product.Name} has been Deleted from {sessionCust.FullName}.";
             context.CustProds.Remove(custProd);
             context.SaveChanges();
+            
             return RedirectToAction("RegProduct", "Registration");
         }
 

@@ -9,9 +9,12 @@ namespace SportsPro.Models
     public class IncidentViewModel
     {
         public Incident Incident { get; set; }
-        public Customer Customer { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
+
+        
         public IEnumerable<Product> Products { get; set; }
+
+        
         public IEnumerable<Technician> Technicians { get; set; }
         public string DesiredAction { get; set; }
     }
