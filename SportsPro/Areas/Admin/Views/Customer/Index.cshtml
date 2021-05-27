@@ -33,9 +33,9 @@
                     @*links that request the Edit() and Delete() action methods of the
                         Customer Controller for that specifiec Customer*@
                     <a asp-controller="Customer" asp-action="Edit"
-                       asp-route-id="@cust.CustomerID" class="btn btn-outline-secondary">Edit</a>
+                       asp-route-id="@cust.CustomerID" class="btn btn-outline-secondary" style="margin-left: 5px; margin-right: 5px">Edit</a>
                     <a asp-controller="Customer" asp-action="Delete"
-                       asp-route-id="@cust.CustomerID" class="btn btn-danger">Delete</a>
+                       asp-route-id="@cust.CustomerID" class="btn btn-outline-danger" style="margin-left: 5px; margin-right: 5px">Delete</a>
                 </td>
             </tr>
         }
