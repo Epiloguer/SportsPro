@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace SportsPro.Controllers
 {
     [Area("Technician")]
-    [Authorize(Roles = "Technician")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Technician")]
     public class TechIncidentController : Controller
     {
         //controller starts with a private property named context of the SportsProContext type

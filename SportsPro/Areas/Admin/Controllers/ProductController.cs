@@ -88,17 +88,21 @@ namespace SportsPro.Controllers
         /*uses id parameter to retrieve a Product object for the specified product from the
            database. Then passes the object to the view.*/
         [HttpGet]
-        public ViewResult Delete(int id = 1)
+        public IActionResult Delete(int id = 1)
         {
             var product = data.Get(id);
-            return View(product);
+            //return View(product);
+            data.Delete(product);
+            data.Save();
+            TempData["msgDelete"] = $"{product.Name} has been deleted.";
+            return RedirectToAction("Index", "Product");
         }
 
         /*passes the Product object it receives from the view to the Remove(). After which
             it calls the SaveChanges() to delete the product from the database.
           Finally it redirects the user back to the Index action.*/
         [HttpPost]
-        public RedirectToActionResult Delete(Product product)
+        public IActionResult Delete(Product product)
         {
             data.Delete(product);
             data.Save();

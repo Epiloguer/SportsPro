@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using React.AspNet
+@using React.RenderFunctions
 @inject SignInManager<User> signInManager
 @{
     var current = ViewContext.RouteData.Values["controller"]?.ToString() + "/" +
@@ -99,7 +101,7 @@
         </nav>
     </nav>
 </header>
-
+<body>
 <div class="container">
     <main role="main" class="pb-5">
         @if (TempData.Keys.Contains("msgAdd"))
@@ -123,9 +125,17 @@
         else { }
     </main>
 </div>
+    <div id="content">
+
+    </div>
 <div class="container">
     @RenderBody()
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.0/umd/react.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+    <script src="@Url.Content("~/js/tutorial.jsx")"></script>
 </div>
+</body>
 
 
 <footer class="border-top footer text-muted">
