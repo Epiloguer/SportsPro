@@ -82,26 +82,19 @@ namespace SportsPro.Controllers
         public IActionResult Edit(Customer customer)
         {
 
-            string key = nameof(Customer.CountryID);
-
-            if (ModelState.GetValidationState(key)==ModelValidationState.Valid)
+            if (customer.CustomerID == 0)
             {
-                if (customer.CountryID==null)
+
+                string EmailToCheck = nameof(customer.Email);
+
+                List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
+
+                //if (allEmails.FirstOrDefault(e => e == customer.Email))
+                if (allEmails.Contains(customer.Email))
                 {
                     ModelState.AddModelError(
-                        key, "Please select a country.");
+                            EmailToCheck, "Please select a unique e-mail.");
                 }
-            }
-
-            string EmailToCheck = nameof(customer.Email);
-            
-            List<string> allEmails = context.Customers.Select(c => c.Email).ToList();
-         
-            //if (allEmails.FirstOrDefault(e => e == customer.Email))
-            if (allEmails.Contains(customer.Email))
-            {
-                ModelState.AddModelError(
-                        EmailToCheck, "Please select a unique e-mail.");
             }
 
             if (ModelState.IsValid)

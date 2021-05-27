@@ -107,21 +107,26 @@ namespace SportsPro.Controllers
             Otherwise, its an existing Incident, the code passes it to the Update().*/
         [Authorize(Roles = "Admin, Technician")]
         [HttpPost]
-        public IActionResult Edit(Incident incident)
+        public IActionResult Edit(IncidentViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                if (incident.IncidentID == 0)
-                    data.Incidents.Insert(incident);
+                if (vm.Incident.IncidentID == 0)
+                    data.Incidents.Insert(vm.Incident);
                 else
-                    data.Incidents.Update(incident);
+                    data.Incidents.Update(vm.Incident);
                 data.Save();
                 return RedirectToAction("Index", "Incident");
             }
             else
             {
-                ViewBag.Action = (incident.IncidentID == 0) ? "Add" : "Edit";
-                return View(incident);
+                ViewBag.Action = (vm.Incident.IncidentID == 0) ? "Add" : "Edit";
+                vm.Customers = data.Customers.List(new QueryOptions<Customer> { OrderBy = c => c.FirstName });
+                vm.Products = data.Products.List(new QueryOptions<Product> { OrderBy = p => p.Name });
+                vm.Technicians = data.Technicians.List(new QueryOptions<Technician> { OrderBy = t => t.Name });
+                vm.DesiredAction= (vm.Incident.IncidentID == 0) ? "Add" : "Edit";
+
+                return View(vm);
             }
         }
 
