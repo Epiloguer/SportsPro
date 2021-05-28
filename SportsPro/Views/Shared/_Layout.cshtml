@@ -64,7 +64,7 @@
 
 
             </div>
-            <div class="navbar-nav navbar-right">
+            <div class="navbar-nav ml-auto" >
                 @if (signInManager.IsSignedIn(User))
                 {
                     // signed-in user - Log Out button and username
@@ -72,8 +72,8 @@
                         <form method="post" asp-action="Logout" asp-controller="Account"
                               asp-area="">
                             <input type="submit" value="Log Out"
-                                   class="btn btn-outline-light" />
-                            <span class="text-light">@User.Identity.Name</span>
+                                   class="btn btn-outline-light  pull-right" />
+                            <span class="text-light ">@User.Identity.Name</span>
                         </form>
                     </li>
                 }
@@ -93,7 +93,7 @@
                            asp-area="" class="btn btn-outline-light">Log In</a>
                     </li>
                 }
-                <a class="nav-item nav-link
+                <a class="nav-item nav-link 
                        @Nav.Active("Home/About", current)" asp-controller="Home" asp-action="About">About</a>
             </div>
         </nav>
