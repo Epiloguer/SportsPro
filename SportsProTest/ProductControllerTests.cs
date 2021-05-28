@@ -31,5 +31,20 @@ namespace SportsProTest
             //assert
             Assert.IsType<ViewResult>(result);
         }
+
+        [Fact]
+        public void Add_Get_ReturnsAViewResult()
+        {
+            // Moq
+            // arrange
+            var rep = new Mock<IRepository<Product>>();
+            var controller = new ProductController(rep.Object);
+
+            // act
+            var result = controller.Add();
+
+            // assert
+            Assert.IsType<ViewResult>(result);
+        }
     }
 }

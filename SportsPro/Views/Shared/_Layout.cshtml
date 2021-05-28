@@ -34,6 +34,7 @@
                 {
                     <a class="nav-item nav-link
                        @Nav.Active("Home/Index", current)" asp-controller="Home" asp-action="Index">Home</a>
+
                     <a class="nav-item nav-link
                        @Nav.Active("Product/Index", current)" asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
                     <a class="nav-item nav-link
@@ -48,6 +49,7 @@
                        class="nav-link @Nav.Active("User", current)">
                         Manage Users
                     </a>
+
                 }
                 else if (User.IsInRole("Technician"))
                 {
@@ -60,11 +62,13 @@
                 {
                     <a class="nav-item nav-link
                        @Nav.Active("Home/Index", current)" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-item nav-link
+                       @Nav.Active("Home/About", current)" asp-controller="Home" asp-action="About">About</a>
                 }
 
 
             </div>
-            <div class="navbar-nav navbar-right">
+            <div class="navbar-nav navbar-right" style="margin-left: 5px; margin-right: 500px">
                 @if (signInManager.IsSignedIn(User))
                 {
                     // signed-in user - Log Out button and username
@@ -93,8 +97,7 @@
                            asp-area="" class="btn btn-outline-light">Log In</a>
                     </li>
                 }
-                <a class="nav-item nav-link
-                       @Nav.Active("Home/About", current)" asp-controller="Home" asp-action="About">About</a>
+                
             </div>
         </nav>
     </nav>
