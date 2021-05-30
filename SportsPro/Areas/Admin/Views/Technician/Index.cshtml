@@ -31,9 +31,9 @@
                     @*links that request the Edit() and Delete() action methods of the
                         Technician Controller for that specifiec Technician*@
                     <a asp-controller="Technician" asp-action="Edit"
-                       asp-route-id="@tech.TechnicianID" class="btn btn-outline-secondary">Edit</a>
+                       asp-route-id="@tech.TechnicianID" class="btn btn-outline-secondary" style="margin-left: 5px; margin-right: 5px">Edit</a>
                     <a asp-controller="Technician" asp-action="Delete"
-                       asp-route-id="@tech.TechnicianID" class="btn btn-danger">Delete</a>
+                       asp-route-id="@tech.TechnicianID" class="btn btn-outline-danger" style="margin-left: 5px; margin-right: 5px">Delete</a>
                 </td>
             </tr>
         }

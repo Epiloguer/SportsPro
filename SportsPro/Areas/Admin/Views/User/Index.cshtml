@@ -7,20 +7,21 @@
 
 <a class="btn btn-primary" asp-action="Add">Add a User</a>
 
-<table class="table table-bordered table-striped table-sm">
+<table class="table table-bordered table-striped table-sm" style="border:1px solid RebeccaPurple;">
+    
     <thead>
         <tr><th>Username</th><th>Roles</th><th></th><th></th><th></th></tr>
     </thead>
-    <tbody>
+    <tbody style="        border: 1px solid RebeccaPurple ">
         @if (Model.Users.Count() == 0)
         {
-            <tr><td colspan="5">There are no user accounts.</td></tr>
+            <tr style="border:1px solid RebeccaPurple "><td colspan="5" style="border:1px solid RebeccaPurple">There are no user accounts.</td></tr>
         }
         else
         {
             @foreach (User user in Model.Users)
             {
-                <tr>
+                <tr style="border:1px solid RebeccaPurple ">
                     <td>@user.UserName</td>
                     <td>
                         @foreach (string roleName in user.RoleNames)
@@ -87,10 +88,10 @@
 else
 {
     <table class="table table-bordered table-striped table-sm">
-        <thead>
+        <thead style="border:1px solid RebeccaPurple">
             <tr><th>Role</th><th></th></tr>
         </thead>
-        <tbody>
+        <tbody style="border:1px solid RebeccaPurple">
             @foreach (var role in Model.Roles)
             {
                 <tr>
@@ -107,6 +108,8 @@ else
             }
         </tbody>
     </table>
+
+   
 
     <form method="post" asp-action="CreateTechnicianRole">
         <button type="submit" class="btn btn-primary">

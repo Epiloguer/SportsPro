@@ -12,16 +12,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SportsPro</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-vapor.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-vapor.css" />
+    @*themes are found here https://bootswatch.com/*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
-        <a class="navbar-brand" href="/">SportsPro</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-secondary p-3">
+        <a class="navbar-brand ml-3" href="/">SportsPro</a>
         <button class="navbar-toggler" type="button"
                 data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -34,6 +34,7 @@
                 {
                     <a class="nav-item nav-link
                        @Nav.Active("Home/Index", current)" asp-controller="Home" asp-action="Index">Home</a>
+
                     <a class="nav-item nav-link
                        @Nav.Active("Product/Index", current)" asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
                     <a class="nav-item nav-link
@@ -44,10 +45,9 @@
                            @Nav.Active("Incident/Index", current)" asp-area="Admin" asp-controller="Incident" asp-action="Index">Incidents</a>
                     <a class="nav-item nav-link
                            @Nav.Active("Registration/Index", current)" asp-area="Admin" asp-controller="Registration" asp-action="Index">Registrations</a>
-                    <a asp-area="Admin" asp-action="Index" asp-controller="User"
-                       class="nav-link @Nav.Active("User", current)">
-                        Manage Users
-                    </a>
+                    <a class="nav-item nav-link
+                       @Nav.Active("User/Index", current)" asp-area="Admin" asp-controller="User" asp-action="Index">Manage Users</a>
+
                 }
                 else if (User.IsInRole("Technician"))
                 {
@@ -60,11 +60,14 @@
                 {
                     <a class="nav-item nav-link
                        @Nav.Active("Home/Index", current)" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-item nav-link
+                       @Nav.Active("Home/About", current)" asp-controller="Home" asp-action="About">About</a>
                 }
 
 
             </div>
-            <div class="navbar-nav navbar-right">
+            <div class="navbar-nav navbar-right" style="margin-left: 5px; margin-right: 500px">
+            <div class="navbar-nav ml-auto" >
                 @if (signInManager.IsSignedIn(User))
                 {
                     // signed-in user - Log Out button and username
@@ -72,8 +75,8 @@
                         <form method="post" asp-action="Logout" asp-controller="Account"
                               asp-area="">
                             <input type="submit" value="Log Out"
-                                   class="btn btn-outline-light" />
-                            <span class="text-light">@User.Identity.Name</span>
+                                   class="btn btn-outline-light  pull-right" />
+                            <span class="text-light ">@User.Identity.Name</span>
                         </form>
                     </li>
                 }
@@ -93,7 +96,8 @@
                            asp-area="" class="btn btn-outline-light">Log In</a>
                     </li>
                 }
-                <a class="nav-item nav-link
+                
+                <a class="nav-item nav-link 
                        @Nav.Active("Home/About", current)" asp-controller="Home" asp-action="About">About</a>
             </div>
         </nav>
