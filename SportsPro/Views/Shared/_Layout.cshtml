@@ -45,10 +45,8 @@
                            @Nav.Active("Incident/Index", current)" asp-area="Admin" asp-controller="Incident" asp-action="Index">Incidents</a>
                     <a class="nav-item nav-link
                            @Nav.Active("Registration/Index", current)" asp-area="Admin" asp-controller="Registration" asp-action="Index">Registrations</a>
-                    <a asp-area="Admin" asp-action="Index" asp-controller="User"
-                       class="nav-link @Nav.Active("User", current)">
-                        Manage Users
-                    </a>
+                    <a class="nav-item nav-link
+                       @Nav.Active("User/Index", current)" asp-area="Admin" asp-controller="User" asp-action="Index">Manage Users</a>
 
                 }
                 else if (User.IsInRole("Technician"))
